@@ -9,9 +9,9 @@ document.addEventListener('DOMContentLoaded', async () => {
     // This allows "one place changes" for Header, Footer, and Popup
     function loadComponents() {
         try {
-            const headerHTML = window.KGC_COMPONENTS.header;
-            const footerHTML = window.KGC_COMPONENTS.footer;
-            const popupHTML = window.KGC_COMPONENTS.popup;
+            const headerHTML = window.SALVIN_COMPONENTS.header;
+            const footerHTML = window.SALVIN_COMPONENTS.footer;
+            const popupHTML = window.SALVIN_COMPONENTS.popup;
 
             const headerRoot = document.getElementById('header-root');
             const footerRoot = document.getElementById('footer-root');
@@ -98,12 +98,16 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
 
         // Auto-Trigger Popup (5 seconds)
-        const hasSeenPopup = sessionStorage.getItem('kgc_popup_seen');
+        const hasSeenPopup = sessionStorage.getItem('salvin_popup_seen');
         if (!hasSeenPopup) {
+            console.log("Popup timer started... waiting 5 seconds");
             setTimeout(() => {
                 if (popupOverlay) {
+                    console.log("Showing popup now.");
                     popupOverlay.style.display = 'flex';
-                    sessionStorage.setItem('kgc_popup_seen', 'true');
+                    sessionStorage.setItem('salvin_popup_seen', 'true');
+                } else {
+                    console.error("Popup overlay element not found!");
                 }
             }, 5000);
         }

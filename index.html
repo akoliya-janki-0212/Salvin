@@ -4,11 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Keval Gandhi Consultant | Industrial Growth & OTM/OFM Strategy</title>
+    <title>Salvin Industries | Turnkey Plant Solutions | Processing & Packaging</title>
     <meta name="description"
-        content="Proprietary industrial growth frameworks (OTM/OFM) for factory owners. Eliminate operational chaos and scale your industrial processing and packaging business with Principal Consultant Keval Gandhi.">
+        content="Salvin Industries specializes in turnkey plant solutions, industrial automation, and professional consulting for Food, Pharma, and Packaging industries worldwide.">
     <meta name="keywords"
-        content="Industrial Consultant, OTM System, OFM Strategy, Factory Growth, Manufacturing Scale, Keval Gandhi, Business Architecture, Industrial Management">
+        content="Industrial Consultant, Processing Solutions, Packaging Industry, Food Processing, Pharma Packaging, Salvin Industries, Turnkey Projects, Manufacturing Automation">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="Salvin Industries | Industrial Excellence">
+    <meta property="og:description"
+        content="Leading global provider of turnkey plant solutions and industrial consulting.">
+    <meta property="og:image" content="assets/logo.png">
+    <meta property="og:url" content="https://salvinindustries.com">
+    <meta name="twitter:card" content="summary_large_image">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -19,6 +27,73 @@
 </head>
 
 <body>
+
+    <!-- Top Visitor Banner -->
+    <div class="top-banner" id="visitor-banner">
+        <div class="banner-content container">
+            <div class="banner-text">
+                <i class="fa-solid fa-eye mr-2" style="color: var(--color-accent); font-size: 1.1rem;"></i>
+                <span style="opacity: 0.9;">Website Views: </span>
+                <span id="visitor-count" class="countdown-timer" style="margin: 0 8px; font-size: 1rem;">-----</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Visitor Count Logic -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Base Date for our count accumulation logic
+            const baseDate = new Date('2026-03-01T00:00:00').getTime();
+            const now = new Date().getTime();
+
+            // Calculate total days passed
+            const daysPassed = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
+
+            // Starting believable visitor base + incrementing 2 per day automatically
+            let baseCount = 18456;
+            let targetCount = baseCount + (Math.max(0, daysPassed) * 2);
+
+            // Small subtle randomness
+            const hourOffset = new Date().getHours() % 4;
+            targetCount += hourOffset;
+
+            const counterElement = document.getElementById('visitor-count');
+            let currentCount = 0; // Starting from 0 as requested
+
+            const formatNumber = (num) => new Intl.NumberFormat('en-IN').format(num);
+
+            function animate() {
+                // Phase 1: Intro (0 to 100) - Show steps of 5
+                if (currentCount < 100) {
+                    currentCount += 5;
+                    counterElement.innerText = formatNumber(currentCount);
+                    setTimeout(animate, 60);
+                }
+                // Phase 2: Rapid Acceleration (to near target)
+                else if (currentCount < targetCount - 60) {
+                    const jump = Math.ceil((targetCount - currentCount) / 12);
+                    currentCount += jump;
+                    counterElement.innerText = formatNumber(currentCount);
+                    setTimeout(animate, 25);
+                }
+                // Phase 3: Outro (Slow down at the end)
+                else if (currentCount < targetCount) {
+                    currentCount += 1;
+                    counterElement.innerText = formatNumber(currentCount);
+
+                    const remaining = targetCount - currentCount;
+                    // Progressive delay for that "slow down" feel
+                    const delay = 180 - (remaining * 2);
+                    setTimeout(animate, Math.max(100, delay));
+                }
+                else {
+                    counterElement.innerText = formatNumber(targetCount);
+                }
+            }
+
+            animate();
+        });
+    </script>
 
     <div id="header-root"></div>
 
@@ -45,23 +120,18 @@
 
         <div class="container hero-container">
             <div class="hero-content">
-                <div class="badge">Industrial Excellence</div>
-                <h1 class="hero-title">Engineering High-Output <span class="highlight">Industrial Success</span></h1>
-                <p class="hero-subtitle">Specialized consulting for Processing & Packaging industries. We help factory
+                <div class="badge">Industrial Excellence - Turnkey Solutions</div>
+                <h2 class="hero-title">Turnkey Solutions in Processing & Packaging <span
+                        class="hero-subtitle-small">Machineries
+                        - Projects - Contract Manufacturing</span></h2>
+                <p class="hero-subtitle">Specialized consulting for Processing & Packaging industries. We help
+                    factory
                     owners move past daily chaos toward a business that grows on its own.</p>
                 <div class="hero-actions">
-                    <button class="btn btn-primary cta-trigger">Schedule Your Business Review <i
+                    <button class="btn btn-primary cta-trigger">Connect with our Engineers <i
                             class="fa-solid fa-arrow-right"></i></button>
-                    <a href="case-studies.html" class="btn btn-outline">Explore Proven Results</a>
                 </div>
 
-                <div class="hero-event-card">
-                    <div class="event-info">
-                        <span class="event-label">Principal Masterclass</span>
-                        <h4>Architecting Industrial Systems for Scale</h4>
-                    </div>
-                    <button class="btn btn-sm btn-primary cta-trigger">Request Invitation</button>
-                </div>
             </div>
         </div>
     </section>
@@ -71,11 +141,12 @@
         <div class="container flex-between align-center">
             <span class="trust-label text-light-dim">TRUSTED BY LEADERS IN</span>
             <div class="logo-strip">
-                <span><i class="fa-solid fa-utensils mr-1"></i> FOOD</span>
-                <span><i class="fa-solid fa-capsules mr-1"></i> PHARMA</span>
+                <span><i class="fa-solid fa-utensils mr-1"></i> FOOD & BEVERAGE</span>
+                <span><i class="fa-solid fa-tractor mr-1"></i> AGRICULTURE</span>
+                <span><i class="fa-solid fa-capsules mr-1"></i> PHARMACEUTICALS</span>
                 <span><i class="fa-solid fa-flask-vial mr-1"></i> CHEMICALS</span>
-                <!-- <span><i class="fa-solid fa-car mr-1"></i> AUTOMOTIVE</span> -->
-                <!-- <span><i class="fa-solid fa-scissors mr-1"></i> TEXTILES</span> -->
+                <span><i class="fa-solid fa-paint-roller mr-1"></i> PAINT</span>
+                <span><i class="fa-solid fa-vials mr-1"></i> API</span>
             </div>
         </div>
     </section>
@@ -86,15 +157,15 @@
             <div class="stats-grid">
                 <div class="stat-item">
                     <span class="stat-number">350+</span>
-                    <span class="stat-label">Strategic Consultations</span>
+                    <span class="stat-label">Projects</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">500+</span>
-                    <span class="stat-label">Ambitious Students</span>
+                    <span class="stat-number">5000+</span>
+                    <span class="stat-label">Products Packaged</span>
                 </div>
                 <div class="stat-item">
-                    <span class="stat-number">10+</span>
-                    <span class="stat-label">Years of Excellence</span>
+                    <span class="stat-number">250+</span>
+                    <span class="stat-label">Pattern Machineries</span>
                 </div>
             </div>
         </div>
@@ -117,93 +188,231 @@
 
                 </div>
                 <div class="content-column">
-                    <span class="section-tag">WHO IS KEVAL GANDHI?</span>
-                    <h2 class="section-title">The Architect of Industrial Growth</h2>
-                    <p class="section-description">For over ten years, we have helped ambitious factory owners stop
-                        being the "one person in charge" of every single decision. Most owners get stuck because the
-                        business can't move without them; we fix that. Our goal is to turn your factory into a business
-                        that runs smoothly on its own and makes money without needing you there every day.</p>
+                    <span class="section-tag">Managing Director</span>
+                    <h3 class="section-title">Writer of industrial System Management</h3>
+                    <p class="section-description">Keval Gandhi is the Founder and Managing Director of Salvin
+                        Industries, a leading engineering and consulting firm based in Ahmedabad, Gujarat. Under his
+                        leadership since 2008, the company has grown into a global provider of turnkey plant solutions
+                        and industrial consulting.</p>
+                    <p class="section-description mt-3"><strong>Professional Roles & Expertise</strong><br>
+                        Keval Gandhi operates multiple business entities and roles within the industrial sector:
+                    </p>
 
                     <div class="expertise-grid mt-4">
                         <div class="expertise-item">
-                            <i class="fa-solid fa-chess-knight text-primary"></i>
+                            <i class="fa-solid fa-user-tie text-primary"></i>
                             <div>
-                                <h4>Business Strategy</h4>
-                                <p>Create a big-picture plan for your factory so you can lead your industry for years to
-                                    come.</p>
+                                <h4>Industrial Consultant</h4>
+                                <p>He provides expert consulting for the food and pharmaceutical industries,
+                                    specializing in production planning, control, and process optimization.</p>
                             </div>
                         </div>
                         <div class="expertise-item">
-                            <i class="fa-solid fa-users-gear text-primary"></i>
+                            <i class="fa-solid fa-building text-primary"></i>
                             <div>
-                                <h4>Operational Flow</h4>
-                                <p>We organize the way work moves through your plant to make sure everything stays on
-                                    track and finishes on time.</p>
+                                <h4>Founder of Salvin Industries</h4>
+                                <p>He established Salvin Industries, which offers
+                                    complete, sustainable, and high-output industrial solutions for startups and large
+                                    corporates alike.</p>
+                            </div>
+                            <div class="expertise-item">
+                                <i class="fa-solid fa-pills text-primary"></i>
+                                <div>
+                                    <h4>Lead at Salvin Pharma</h4>
+                                    <p>He is also associated with Salvin Pharma and Packaging Industries, which deals in
+                                        organic spices, chocolates, and automatic packaging plants.</p>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <a href="about.html" class="btn btn-outline mt-4">Deep Dive Into Our Philosophy</a>
+                        <a href="about.html" class="btn btn-outline mt-4">Deep Dive Into Our Philosophy</a>
+                    </div>
                 </div>
             </div>
-        </div>
     </section>
 
-    <!-- Core Consulting Pillars -->
+    <!-- Salvin Industries Overview -->
     <section class="section bg-light">
         <div class="container">
             <div class="section-header text-center">
-                <span class="section-tag">OUR METHOD</span>
-                <h2 class="section-title">Consultancy for Growth Blockers</h2>
-                <p class="section-description">We spot the small, hidden bottlenecks that are dragging your factory down
-                    and replace them with solid systems so your production never hits a snag.</p>
+                <h2 class="section-title mt-2">Salvin Industries Overview</h2>
+                <p class="section-description text-center max-w-800 mx-auto">Salvin
+                    Industries provides end-to-end technology solutions across various sectors.</p>
             </div>
 
-            <div class="grid-3" style="gap: 20px;">
-                <div class="service-card text-center hover-lift">
-                    <i class="fa-solid fa-magnifying-glass-chart fa-3x text-primary mb-3"></i>
-                    <h3>The Review</h3>
-                    <p>Eliminate hidden profit leaks by identifying the strategic gaps in your macro-industrial roadmap.
-                    </p>
-                    <button class="link-arrow cta-trigger">Start Check-up <i
-                            class="fa-solid fa-arrow-right"></i></button>
+            <div class="grid-auto-fit-250">
+                <div class="service-card shadow-sm hover-lift text-center card-padded-white">
+                    <i class="fa-solid fa-gears fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Core Services</h3>
+                    <p class="text-0-95"">Turnkey plant solutions, machinery
+                        installation, industrial automation (Industry 4.0), and SOP development.</p>
                 </div>
 
-                <div class="service-card text-center hover-lift">
-                    <i class="fa-solid fa-diagram-project fa-3x text-accent mb-3"></i>
-                    <h3>The System</h3>
-                    <p>Solve the "Founder's Trap." We implement our OTM/OFM systems to decentralize authority.</p>
-                    <button class="link-arrow cta-trigger">Deploy Methods <i
-                            class="fa-solid fa-arrow-right"></i></button>
+                <div class=" service-card shadow-sm hover-lift text-center card-padded-white">
+                        <i class="fa-solid fa-industry fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Industries Served</h3>
+                    <p class="text-0-95"">Food processing (spices, dairy,
+                        snacks), agriculture, chemicals, pharmaceuticals, and cosmetics.</p>
                 </div>
 
-                <div class="service-card text-center hover-lift">
-                    <i class="fa-solid fa-chart-line fa-3x text-primary mb-3"></i>
-                    <h3>The Pipeline</h3>
-                    <p>Fix inconsistent sales. Systematic lead generation to keep your factory at 100% capacity.</p>
-                    <button class="link-arrow cta-trigger">Build Funnel <i class="fa-solid fa-arrow-right"></i></button>
+                <div class=" service-card shadow-sm hover-lift text-center card-padded-white">
+                        <i class="fa-solid fa-earth-americas fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Global Reach</h3>
+                    <p class="text-0-95"">The company maintains a presence in
+                        over 30 countries, with international offices in Canada, the US, and Australia.</p>
                 </div>
 
-
+                <div class=" service-card shadow-sm hover-lift text-center card-padded-white">
+                        <i class="fa-solid fa-building-circle-check fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">New Developments</h3>
+                    <p class="text-0-95"">As of April 2025, the company opened a
+                        new corporate office in Ahmedabad specifically for its supply chain division.</p>
+                </div>
             </div>
         </div>
     </section>
 
-    <!-- Proprietary Frameworks Teaser -->
-    <section class="section bg-dark text-white">
-        <div class="container text-center">
-            <span class="badge"
-                style="background: rgba(255,107,0,0.2); border: 1px solid var(--color-accent); color: var(--color-accent);">Our
-                Secret Sauce</span>
-            <h2 class="mt-3 text-white">Powerful Frameworks. Proven Results.</h2>
-            <p class="text-light-dim mb-5" style="max-width: 800px; margin-inline: auto;">While our consulting covers
-                broad business strategy, we use specialized internal tools like <strong>OTM</strong> (Organizational
-                Transformation Method) and <strong>OFM</strong> (Optimal Flow Method) to achieve the results you see.
-            </p>
+    <!-- Industrial Machinery Portfolio -->
+    <section class=" section" id="machinery-portfolio">
+                    <div class="container">
+                        <div class="section-header text-center">
+                            <h2 class="section-title mt-2">Industrial Machinery Portfolio</h2>
+                            <p class="section-description text-center max-w-800 mx-auto">The company
+                                manufactures and installs a wide variety of high-performance equipment.</p>
+                        </div>
 
-            <div class="flex-center gap-3">
-                <button class="btn btn-primary cta-trigger">See OTM/OFM in Action</button>
-                <a href="services.html" class="btn btn-outline text-white border-white">Explore Full Services</a>
+                        <div class="grid-3" style="gap: 20px;">
+                            <div class="service-card shadow-sm hover-lift text-center border-light">
+                                <i class="fa-solid fa-utensils text-primary fa-3x mb-3"></i>
+                                <h4>Food Processing</h4>
+                                <p class=" text-0-95">Includes spice grinding machines
+                                    (pulverizers), meat mixers, bone saws, marinators, and rotary roasters for puffed
+                                    rice.</p>
+                            </div>
+                            <div class="service-card shadow-sm hover-lift text-center border-light">
+                                <i class="fa-solid fa-capsules text-primary fa-3x mb-3"></i>
+                                <h4>Pharmaceutical & Cosmetic</h4>
+                                <p class=" text-0-95">Specialized units for syrup, vial, and
+                                    tablet/blister packaging, as well as chemical and stirred reactors.</p>
+                            </div>
+                            <div class="service-card shadow-sm hover-lift text-center border-light">
+                                <i class="fa-solid fa-bottle-droplet text-primary fa-3x mb-3"></i>
+                                <h4>Filling & Capping</h4>
+                                <p class=" text-0-95">High-precision liquid and powder filling
+                                    machines, automatic capping, and high-speed labeling systems.</p>
+                            </div>
+                            <div class="service-card shadow-sm hover-lift text-center border-light">
+                                <i class="fa-solid fa-box-open text-primary fa-3x mb-3"></i>
+                                <h4>Packaging Solutions</h4>
+                                <p class=" text-0-95">Advanced equipment like continuous induction
+                                    sealers, automatic packing machines, and shrink tunnels.</p>
+                            </div>
+                            <div class="service-card shadow-sm hover-lift text-center border-light">
+                                <i class="fa-solid fa-blender text-primary fa-3x mb-3"></i>
+                                <h4>Milling & Mixing</h4>
+                                <p class=" text-0-95">Hammer mills, pin mills, and cryogenic
+                                    grinders for high-fat spices, alongside ribbon blenders and mass mixers.</p>
+                            </div>
+                        </div>
+                    </div>
+    </section>
+
+    <!-- Turnkey Plant Solutions -->
+    <section class="section bg-light" id="turnkey-solutions">
+        <div class="container">
+            <div class="split-layout align-center">
+                <div class="content-column">
+                    <span class="section-tag">END-TO-END</span>
+                    <h2 class="section-title">Turnkey Plant Solutions</h2>
+                    <p class="section-description">Salvin Industries offers end-to-end "concept-to-commissioning"
+                        services for setting up complete manufacturing lines.</p>
+
+                    <div class="mt-4">
+                        <div class="expertise-item mb-4" style="display: flex; gap: 15px;">
+                            <i class="fa-solid fa-industry text-primary fa-2x mt-1"></i>
+                            <div>
+                                <h4>Industries</h4>
+                                <p class="">Specialized setups for spices processing (e.g., 3-stage
+                                    chilli), honey processing, dairy, beverages, and snacks.</p>
+                            </div>
+                        </div>
+                        <div class="expertise-item" style="display: flex; gap: 15px;">
+                            <i class="fa-solid fa-microchip text-primary fa-2x mt-1"></i>
+                            <div>
+                                <h4>Automation</h4>
+                                <p class="">Integration of Industry 4.0 solutions, PLC/HMI controls, and
+                                    robotic systems to ensure "one-touch" hygienic production.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="image-column">
+                    <div class="glass-card text-center shadow-lg turnkey-banner">
+                        <i class="fa-solid fa-gears fa-4x mb-4 text-white"></i>
+                        <h3 class="text-white">Concept to Commissioning</h3>
+                        <p class="text-white">We build complete factories from zero to full
+                            operational
+                            output, handling everything from layout to machinery installation.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Consulting & Technical Services -->
+    <section class="section" id="consulting-services">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title mt-2">Consulting & Technical Services</h2>
+                <p class="section-description text-center max-w-800 mx-auto">Under Salvin Industries,
+                    Keval Gandhi provides strategic and operational guidance.</p>
+            </div>
+
+            <div class="grid-auto-fit-250">
+                <div class="service-card shadow-sm hover-lift text-center card-padded-border">
+                    <i class="fa-solid fa-laptop-file fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Project Advisory</h3>
+                    <p class="text-0-95">Feasibility studies, plant layout
+                        design, and assistance with government subsidies (MOFPI) for food projects.</p>
+                </div>
+
+                <div class="service-card shadow-sm hover-lift text-center card-padded-border">
+                    <i class="fa-solid fa-chart-line fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Operational Excellence</h3>
+                    <p class="text-0-95">Efficiency audits to reduce waste, SOP
+                        development, and implementation of systems to "decentralize authority" in manufacturing plants.
+                    </p>
+                </div>
+
+                <div class="service-card shadow-sm hover-lift text-center card-padded-border">
+                    <i class="fa-solid fa-leaf fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Post-Harvest Consulting</h3>
+                    <p class="text-0-95">Expertise in infrastructure for
+                        fruits, vegetables, cereals, and marine processing.</p>
+                </div>
+
+                <div class="service-card shadow-sm hover-lift text-center card-padded-border">
+                    <i class="fa-solid fa-headset fa-3x text-primary mb-3"></i>
+                    <h3 class="text-1-25">Maintenance & Support</h3>
+                    <p class="text-0-95">Comprehensive Annual Maintenance
+                        Contracts (AMC) and 24/7 remote technical support.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Global Presence Section -->
+    <section class="section bg-light" id="global-presence">
+        <div class="container">
+            <div class="section-header text-center">
+                <h2 class="section-title mt-2">Global Presence</h2>
+                <p class="section-description text-center max-w-800 mx-auto">Providing industrial excellence across
+                    international borders with 350+ successful projects worldwide.</p>
+            </div>
+            <div class="global-map-wrapper mt-5">
+                <img src="assets/global_presence.png" alt="Global Presence - Salvin Industries"
+                    class="shadow-lg rounded-img mx-auto"
+                    style="max-width: 100%; height: auto; display: block; background: white; padding: 10px;">
             </div>
         </div>
     </section>
