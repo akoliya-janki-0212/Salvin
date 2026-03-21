@@ -19,7 +19,7 @@ window.SALVIN_COMPONENTS = {
                 <li><a href="index.html">Home page</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="#">Machineries</a></li>
-                <li><a href="#">Project</a></li>
+                <li><a href="projects.html">Project</a></li>
                 <li><a href="#">Contract packaging</a></li>
                 <li><a href="contact.html" class="btn btn-secondary nav-cta cta-trigger">Contact us</a></li>
             </ul>
@@ -50,7 +50,7 @@ window.SALVIN_COMPONENTS = {
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="services.html">Consultancy Solutions</a></li>
+                <li><a href="projects.html">Projects</a></li>
 
             </ul>
         </div>
