@@ -2,6 +2,31 @@
    Keval Gandhi Consultant - Design System & Styles
    ========================================================================= */
 
+/* --- Added Contact Stacked Layout --- */
+.contact-stacked-details {
+  background: var(--color-light);
+  padding: 3rem;
+  border-radius: 20px;
+  margin-bottom: 3rem;
+}
+
+.contact-details-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2rem;
+}
+
+.contact-form-stacked {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+  .contact-stacked-details {
+    padding: 1.5rem;
+  }
+}
+
 /* --- Variables & Theming --- */
 :root {
   /* Brand Colors */
@@ -35,6 +60,90 @@
   /* Layout */
   --container-width: 1200px;
   --section-padding: 5rem 0;
+}
+
+/* --- Certification Logo Sizing --- */
+.certification-logo {
+  height: 120px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  transition: transform var(--transition-normal);
+}
+
+@media (max-width: 768px) {
+  .certification-logo {
+    height: 60px;
+    /* Reduced for mobile as requested */
+  }
+}
+
+/* --- Certifications & Quality Standards Section --- */
+.certifications-section {
+  padding: 3rem 0;
+  background: var(--color-white);
+}
+
+.certifications-card {
+  background: rgba(248, 250, 252, 0.8);
+  border: 1px solid #e2e8f0;
+  border-radius: 20px;
+  padding: 3rem 2rem;
+}
+
+.certification-badge {
+  display: inline-block;
+  padding: 0.5rem 1.25rem;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0));
+  color: rgb(8, 8, 8);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-radius: 50px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1.5rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2), inset 0 0 10px rgba(255, 255, 255, 0.1);
+  animation: badgeGlow 4s infinite alternate;
+}
+
+.certifications-title-box {
+  flex: 0 0 33.333%;
+}
+
+.certifications-logos-container {
+  flex: 0 0 66.666%;
+}
+
+.certifications-grid {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.certification-item {
+  flex: 0 0 calc(25% - 1.2rem);
+  text-align: center;
+}
+
+@media (max-width: 991px) {
+
+  .certifications-title-box,
+  .certifications-logos-container {
+    flex: 0 0 100%;
+    text-align: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .certification-item {
+    flex: 0 0 calc(50% - 1rem);
+    /* 2 per row on mobile */
+  }
 }
 
 /* --- Reset & Base Styles --- */
@@ -785,7 +894,7 @@ img {
 }
 
 .section-title {
-  font-size: 2.5rem;
+  font-size: 2.0rem;
   font-weight: 800;
   margin-bottom: 1rem;
   position: relative;
@@ -1543,7 +1652,7 @@ textarea:focus {
   }
 
   h2.section-title {
-    font-size: 2rem;
+    font-size: 1.5rem;
   }
 
   .hero-title {

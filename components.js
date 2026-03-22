@@ -46,21 +46,19 @@ window.SALVIN_COMPONENTS = {
             </div>
         </div>
         <div class="footer-links">
-            <h4>Solutions</h4>
+            <h4>Navigation</h4>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About Us</a></li>
-                <li><a href="projects.html">Projects</a></li>
-                <li><a href="contract-packaging.html">Contract Packaging</a></li>
-
+                <li><a href="contact.html">Contact Us</a></li>
             </ul>
         </div>
         <div class="footer-links">
-            <h4>Resources</h4>
+            <h4>Services</h4>
             <ul>
-                <li><a href="case-studies.html">Success Stories</a></li>
-                <!-- <li><a href="media.html">Knowledge Hub</a></li> -->
-                <li><a href="contact.html">Book Business Review</a></li>
+                <li><a href="projects.html">Turnkey Project</a></li>
+                <li><a href="services.html">Machineries</a></li>
+                <li><a href="contract-packaging.html">Contract Packaging</a></li>
             </ul>
         </div>
     </div>
@@ -83,35 +81,34 @@ window.SALVIN_COMPONENTS = {
             <p>Direct advisory for factory owners & industrial leaders looking to eliminate operational chaos with <strong>Salvin Industries</strong>.</p>
         </div>
 
-        <form id="popupForm" action="https://formspree.io/f/xojkqgyz" method="POST">
+        <form id="popupForm" action="https://formspree.io/f/mlgpkkjj" method="POST">
             <div class="form-group">
-                <input type="text" name="name" required placeholder="Full Name" class="input-light">
+                <input type="text" name="company_name" required placeholder="Company Name" class="input-light">
             </div>
             <div class="form-group">
-                <input type="email" name="email" required placeholder="Professional Email" class="input-light">
+                <input type="text" name="contact_person" required placeholder="Contact Person Name" class="input-light">
             </div>
             <div class="form-group">
-                <input type="tel" name="whatsapp" required placeholder="WhatsApp Number (With Country Code)"
+                <input type="email" name="email" required placeholder="Official Email ID" class="input-light">
+            </div>
+            <div class="form-group">
+                <input type="tel" name="mobile" required placeholder="Mobile Number"
                     class="input-light">
             </div>
 
             <div class="form-group">
-                <select name="role" required class="input-light">
-                    <option value="" disabled selected>Current Professional Role</option>
-                    <option value="Factory Owner">Factory Owner / CEO</option>
-                    <option value="Manager">Operations / Plant Manager</option>
-                    <option value="Student">Ambitious Student / Future Leader</option>
-                    <option value="Other">External Consultant / Other</option>
+                <select name="inquiry_for" required class="input-light">
+                    <option value="" disabled selected>Inquiry For</option>
+                    <option value="Packaging">Packaging</option>
+                    <option value="Machine">Machine</option>
+                    <option value="Turnkey Project">Turnkey Project</option>
+                    <option value="Other">Other</option>
                 </select>
             </div>
 
             <div class="form-group">
-                <select name="need" required class="input-light">
-                    <option value="" disabled selected>Primary Strategic Need</option>
-                    <option value="Growth Strategy">Systematic Growth Strategy</option>
-                    <option value="Production Flow (OFM)">Production Flow Optimization (OFM)</option>
-                    <option value="System Setup (OTM)">OTM System Setup</option>
-                </select>
+                <textarea name="description" placeholder="Description / Message" class="input-light" 
+                    style="width:100%; padding:12px; border:1px solid #ddd; border-radius:4px; height:80px;"></textarea>
             </div>
 
             <button type="submit" class="btn btn-primary btn-block mt-3">Request Immediate Consultation <i
