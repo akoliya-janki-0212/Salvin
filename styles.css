@@ -156,6 +156,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
+  overflow-x: hidden;
 }
 
 body {
@@ -1663,8 +1664,10 @@ textarea:focus {
 
   .hero-subtitle-small {
     font-size: 0.45em;
-    white-space: nowrap;
+    white-space: normal;
     line-height: 1.4;
+    display: block;
+    margin-top: 5px;
   }
 
   .hero-slide {
@@ -1791,6 +1794,20 @@ textarea:focus {
   .btn {
     padding: 0.6rem 1.2rem;
   }
+
+  /* Popup Optimization */
+  .modal-content {
+    padding: 1.5rem !important;
+    width: 95% !important;
+  }
+
+  .modal-header h3 {
+    font-size: 1.25rem;
+  }
+
+  .modal-header p {
+    font-size: 0.8rem;
+  }
 }
 
 /* --- Dynamic Polish & Additions --- */
@@ -1912,6 +1929,312 @@ textarea:focus {
   font-size: 1.1rem;
 }
 
+/* --- Segmented Vertical Journey (Based on Ref Image 2) --- */
+.seg-v-wrapper {
+  position: relative;
+  max-width: 1000px;
+  margin: 6rem auto;
+  padding: 4rem 0;
+}
+
+.seg-v-line {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  bottom: 0;
+  width: 4px;
+  background: var(--color-primary);
+  transform: translateX(-50%);
+  z-index: 1;
+}
+
+.seg-v-item {
+  position: relative;
+  width: 100%;
+  margin-bottom: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.seg-v-item:last-child {
+  margin-bottom: 0;
+}
+
+.seg-v-node {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 60px;
+  background: var(--color-white);
+  border: 4px solid var(--color-primary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+  box-shadow: 0 0 20px rgba(0, 123, 143, 0.2);
+}
+
+.seg-v-node span {
+  font-family: var(--font-heading);
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--color-primary);
+}
+
+.seg-v-branch {
+  height: 2px;
+  background: var(--color-primary);
+  width: 100px;
+  position: absolute;
+  left: 50%;
+  z-index: 2;
+}
+
+.seg-v-item.right .seg-v-branch {
+  left: calc(50% + 30px);
+}
+
+.seg-v-item.left .seg-v-branch {
+  left: auto;
+  right: calc(50% + 30px);
+}
+
+.seg-v-content {
+  width: 42%;
+  display: flex;
+  align-items: center;
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border-left: 5px solid var(--color-primary);
+  transition: transform 0.3s ease;
+}
+
+.seg-v-content:hover {
+  transform: translateY(-5px);
+}
+
+.seg-v-item.right .seg-v-content {
+  margin-left: auto;
+}
+
+.seg-v-item.left .seg-v-content {
+  margin-right: auto;
+  border-left: none;
+  border-right: 5px solid var(--color-primary);
+}
+
+.seg-v-year {
+  font-family: var(--font-heading);
+  font-size: 3rem;
+  font-weight: 900;
+  color: var(--color-primary);
+  opacity: 0.15;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+  line-height: 1;
+  padding: 0 10px;
+}
+
+.seg-v-text {
+  flex: 1;
+  padding: 0 1rem;
+}
+
+.seg-v-text h5 {
+  color: var(--color-dark);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.seg-v-text p {
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--color-text-light);
+}
+
+.active-node {
+  background: var(--color-primary) !important;
+  color: var(--color-white) !important;
+  box-shadow: 0 0 30px var(--color-primary) !important;
+}
+
+.active-node span {
+  color: white !important;
+}
+
+/* --- Animations for Segmented Journey --- */
+@keyframes segLineGrow {
+  from { transform: translateX(-50%) scaleY(0); }
+  to { transform: translateX(-50%) scaleY(1); }
+}
+
+@keyframes segBranchExtend {
+  from { scale: 0 1; }
+  to { scale: 1 1; }
+}
+
+@keyframes segNodePop {
+  0% { transform: translateX(-50%) scale(0); opacity: 0; }
+  70% { transform: translateX(-50%) scale(1.2); opacity: 1; }
+  100% { transform: translateX(-50%) scale(1); opacity: 1; }
+}
+
+@keyframes segSlideInRight {
+  from { opacity: 0; transform: translateX(50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes segSlideInLeft {
+  from { opacity: 0; transform: translateX(-50px); }
+  to { opacity: 1; transform: translateX(0); }
+}
+
+.seg-v-line {
+  transform-origin: top;
+  animation: segLineGrow 2s ease-out forwards;
+}
+
+.seg-v-item .seg-v-node {
+  opacity: 0;
+  animation: segNodePop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+}
+
+.seg-v-item .seg-v-branch {
+  transform-origin: center;
+  scale: 0 1;
+  animation: segBranchExtend 0.6s ease-out forwards;
+}
+
+.seg-v-item.right .seg-v-branch { transform-origin: left; }
+.seg-v-item.left .seg-v-branch { transform-origin: right; }
+
+.seg-v-item.right .seg-v-content {
+  animation: segSlideInRight 0.8s ease-out forwards;
+}
+
+.seg-v-item.left .seg-v-content {
+  animation: segSlideInLeft 0.8s ease-out forwards;
+}
+
+/* Staggered Delays for 9 Items */
+.seg-v-item:nth-child(2) { animation-delay: 0.2s; }
+.seg-v-item:nth-child(3) { animation-delay: 0.4s; }
+.seg-v-item:nth-child(4) { animation-delay: 0.6s; }
+.seg-v-item:nth-child(5) { animation-delay: 0.8s; }
+.seg-v-item:nth-child(6) { animation-delay: 1.0s; }
+.seg-v-item:nth-child(7) { animation-delay: 1.2s; }
+.seg-v-item:nth-child(8) { animation-delay: 1.4s; }
+.seg-v-item:nth-child(9) { animation-delay: 1.6s; }
+
+.seg-v-item:nth-child(2) * { animation-delay: inherit; }
+.seg-v-item:nth-child(3) * { animation-delay: inherit; }
+.seg-v-item:nth-child(4) * { animation-delay: inherit; }
+.seg-v-item:nth-child(5) * { animation-delay: inherit; }
+.seg-v-item:nth-child(6) * { animation-delay: inherit; }
+.seg-v-item:nth-child(7) * { animation-delay: inherit; }
+.seg-v-item:nth-child(8) * { animation-delay: inherit; }
+.seg-v-item:nth-child(9) * { animation-delay: inherit; }
+/* --- Corporate Profile Intro Styles --- */
+.about-intro {
+  overflow: visible;
+}
+
+.feature-item-inline {
+  display: flex;
+  align-items: center;
+  background: #fdfdfd;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid #edf2f7;
+  transition: all 0.3s ease;
+}
+
+.feature-item-inline:hover {
+  border-color: var(--color-primary);
+  background: #f8fbfb;
+  transform: translateX(5px);
+}
+
+.feature-item-inline span {
+  font-weight: 700;
+  color: var(--color-dark);
+  font-size: 0.95rem;
+}
+
+.experience-badge span {
+  font-family: var(--font-heading);
+}
+
+/* Ensure Journey Section has enough top margin after intro */
+.journey-segmented {
+  margin-top: 4rem;
+}
+
+.hover-swap:hover {
+  background: var(--color-primary);
+  color: white;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 123, 143, 0.2);
+}
+
+.hover-swap:hover i {
+  color: white !important;
+}
+
+.hover-swap {
+  transition: all 0.3s ease;
+}
+
+@media (max-width: 991px) {
+  .seg-v-content {
+    width: 45%;
+    padding: 1.25rem;
+  }
+  .seg-v-branch {
+    width: 30px;
+  }
+  .seg-v-year {
+    font-size: 1.5rem;
+    padding: 0 5px;
+  }
+  .seg-v-text h5 {
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+  }
+  .seg-v-text p {
+    font-size: 0.75rem;
+    line-height: 1.3;
+  }
+  .seg-v-node {
+    width: 45px;
+    height: 45px;
+  }
+  .seg-v-node span {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .seg-v-wrapper {
+    padding: 2rem 0;
+    margin: 2rem 0;
+  }
+  .seg-v-content {
+    width: 43%;
+    padding: 0.75rem;
+  }
+  .seg-v-year {
+    font-size: 1.25rem;
+  }
+  .seg-v-item {
+    margin-bottom: 60px;
+  }
+}
+
 .flex-center {
   display: flex;
   justify-content: center;
@@ -1920,6 +2243,65 @@ textarea:focus {
 
 .gap-3 {
   gap: 1.5rem;
+}
+
+.grid-4-responsive {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+}
+
+@media (max-width: 991px) {
+  .grid-4-responsive {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid-8-mobile-4 {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: 12px;
+}
+
+@media (max-width: 991px) {
+  .grid-8-mobile-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-8-mobile-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+.grid-3-2 {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1.5rem;
+}
+
+.grid-3-2 > div:nth-child(-n+3) {
+  grid-column: span 2;
+}
+
+.grid-3-2 > div:nth-child(n+4) {
+  grid-column: span 3;
+}
+
+@media (max-width: 991px) {
+  .grid-3-2 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .grid-3-2 > div:nth-child(n) {
+    grid-column: auto;
+  }
+}
+
+@media (max-width: 576px) {
+  .grid-3-2 {
+    grid-template-columns: 1fr;
+  }
 }
 
 .margin-inline-auto {

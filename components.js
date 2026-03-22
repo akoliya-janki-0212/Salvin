@@ -116,8 +116,8 @@ window.SALVIN_COMPONENTS = {
             <p id="popupSuccessMessage" class="success-message"
                 style="display: none; color: #28a745; margin-top: 10px; font-weight: 600; text-align:center;">Strategic
                 insight requested. Check your WhatsApp shortly.</p>
+        </form>
     </div>
-    </form>
 </div>
 `
 };
