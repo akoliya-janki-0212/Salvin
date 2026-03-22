@@ -2037,6 +2037,8 @@ textarea:focus {
   transform: rotate(180deg);
   line-height: 1;
   padding: 0 10px;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .seg-v-text {
@@ -2138,9 +2140,152 @@ textarea:focus {
 .seg-v-item:nth-child(7) * { animation-delay: inherit; }
 .seg-v-item:nth-child(8) * { animation-delay: inherit; }
 .seg-v-item:nth-child(9) * { animation-delay: inherit; }
+/* --- About Us Hero Section --- */
+.about-hero {
+  position: relative;
+  height: 60vh;
+  min-height: 450px;
+  background-image: linear-gradient(rgba(0, 0 ,0, 0.5), rgba(0, 0, 0, 0.7)), url('assets/about_us.png');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  color: white;
+  overflow: hidden;
+  padding-top: 80px;
+}
+
+.about-hero::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100px;
+  background: linear-gradient(to top, rgba(255, 255, 255, 0.1), transparent);
+  z-index: 1;
+}
+
+.about-hero-box {
+  background: rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  padding: 3rem 5rem;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  animation: heroReveal 1.5s cubic-bezier(0.19, 1, 0.22, 1) forwards;
+}
+
+.about-hero h1 {
+  font-family: var(--font-heading);
+  font-size: 5.5rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 12px;
+  margin: 0;
+  color: #ffffff !important;
+  text-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  z-index: 2;
+  position: relative;
+}
+
+@media (max-width: 991px) {
+  .about-hero-box {
+    padding: 2rem 3rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero-box {
+    padding: 1.5rem 2rem;
+    width: 90%;
+    margin: 0 auto;
+  }
+}
+
+@keyframes heroReveal {
+  0% { opacity: 0; transform: translateY(40px) scale(0.95); filter: blur(10px); }
+  100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); }
+}
+
+@media (max-width: 991px) {
+  .about-hero {
+    background-attachment: scroll;
+    height: 50vh;
+  }
+  .about-hero h1 {
+    font-size: 4rem;
+    letter-spacing: 8px;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-hero {
+    height: 350px;
+    min-height: auto;
+    padding-top: 60px;
+  }
+  .about-hero h1 {
+    font-size: 2.5rem;
+    letter-spacing: 4px;
+    padding: 0 15px;
+  }
+}
+
 /* --- Corporate Profile Intro Styles --- */
 .about-intro {
   overflow: visible;
+}
+
+.intro-title {
+  font-size: 3.5rem;
+  color: var(--color-dark);
+  font-weight: 800;
+  line-height: 1.1;
+  margin-bottom: 1.5rem;
+}
+
+.intro-desc {
+  font-size: 1.25rem;
+  line-height: 1.8;
+  color: var(--color-text-light);
+  margin-bottom: 2.5rem;
+  text-align: center;
+}
+
+.journey-title {
+  font-size: 3.5rem; 
+  color: var(--color-dark); 
+  font-weight: 800;
+}
+
+@media (max-width: 991px) {
+  .intro-title, .journey-title {
+    font-size: 2.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .intro-title, .journey-title {
+    font-size: 2.25rem;
+  }
+  .intro-desc {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .intro-title, .journey-title {
+    font-size: 1.85rem;
+  }
+  .intro-desc {
+    font-size: 0.95rem;
+  }
 }
 
 .feature-item-inline {
@@ -2224,14 +2369,21 @@ textarea:focus {
     margin: 2rem 0;
   }
   .seg-v-content {
-    width: 43%;
-    padding: 0.75rem;
+    width: 48% !important;
+    padding: 0.5rem !important;
   }
   .seg-v-year {
-    font-size: 1.25rem;
+    font-size: 1rem !important;
+    padding: 0 5px !important;
+  }
+  .seg-v-branch {
+    width: 15px !important;
   }
   .seg-v-item {
-    margin-bottom: 60px;
+    margin-bottom: 50px;
+  }
+  .seg-v-text {
+    padding: 0 5px !important;
   }
 }
 
