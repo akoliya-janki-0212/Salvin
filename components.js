@@ -16,7 +16,7 @@ window.SALVIN_COMPONENTS = {
 
         <nav class="main-nav">
             <ul class="nav-links">
-                <li><a href="index.html">Home page</a></li>
+                <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
                 <li><a href="#">Machineries</a></li>
                 <li><a href="projects.html">Project</a></li>
