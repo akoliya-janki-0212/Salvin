@@ -25,6 +25,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="styles.css">
     <link rel="icon" href="assets/favicon.png" type="image/png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 </head>
 
 <body>
@@ -573,7 +574,6 @@
         </div>
     </section>
 
-
     <!-- Global Presence Section -->
     <section class="section" id="global-presence">
         <div class="container">
@@ -590,11 +590,91 @@
         </div>
     </section>
 
+    <!-- Latest News / Updates Slider -->
+    <section class="section bg-light" id="latest-news">
+        <div class="container">
+            <div class="section-header text-center">
+                <span class="section-tag">Updates</span>
+                <h2 class="section-title mt-2">Latest News & Projects</h2>
+                <p class="section-description text-center max-w-800 mx-auto">Recent milestones, successful
+                    installations, and new facility developments.</p>
+            </div>
+
+            <div class="swiper news-swiper mt-4 pb-5">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide news-slide">
+                        <div class="news-icon-wrapper"><i class="fa-solid fa-box-open"></i></div>
+                        <div class="news-content">
+                            <p>Contract Manufacturing & Packaging Plant for spices in Kathwada</p>
+                        </div>
+                    </div>
+                    <!-- Slide 2 -->
+                    <div class="swiper-slide news-slide">
+                        <div class="news-icon-wrapper"><i class="fa-solid fa-droplet"></i></div>
+                        <div class="news-content">
+                            <p>Honey Processing Plant Setup in Rajkot</p>
+                        </div>
+                    </div>
+                    <!-- Slide 3 -->
+                    <div class="swiper-slide news-slide">
+                        <div class="news-icon-wrapper"><i class="fa-solid fa-flask"></i></div>
+                        <div class="news-content">
+                            <p>Complete API Plant installation in Vadodara</p>
+                        </div>
+                    </div>
+                    <!-- Slide 4 -->
+                    <div class="swiper-slide news-slide">
+                        <div class="news-icon-wrapper"><i class="fa-solid fa-bolt"></i></div>
+                        <div class="news-content">
+                            <p>High speed cartage filling machine SA-CA-2026 model launch</p>
+                        </div>
+                    </div>
+                    <!-- Slide 5 -->
+                    <div class="swiper-slide news-slide">
+                        <div class="news-icon-wrapper"><i class="fa-solid fa-pepper-hot"></i></div>
+                        <div class="news-content">
+                            <p>1000 kg/hr Chilli Powder Grinding Plant setup in Mexico</p>
+                        </div>
+                    </div>
+
+                </div>
+                <!-- Pagination -->
+                <div class="swiper-pagination"></div>
+            </div>
+        </div> <!-- Closing container now -->
+    </section>
+
     <div id="footer-root"></div>
     <div id="popup-root"></div>
 
     <script src="components.js"></script>
     <script src="main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var newsSwiper = new Swiper('.news-swiper', {
+                grabCursor: true,
+                centeredSlides: true,
+                slidesPerView: 3,
+                spaceBetween: 30,
+                loop: true,
+                autoplay: {
+                    delay: 3500,
+                    disableOnInteraction: false,
+                },
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                breakpoints: {
+                    320: { slidesPerView: 1, spaceBetween: 20 },
+                    768: { slidesPerView: 2, spaceBetween: 30 },
+                    1024: { slidesPerView: 3, spaceBetween: 30 }
+                }
+            });
+        });
+    </script>
 </body>
 
 </html>
