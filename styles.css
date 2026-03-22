@@ -156,7 +156,7 @@
 html {
   scroll-behavior: smooth;
   font-size: 16px;
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 body {
@@ -164,7 +164,7 @@ body {
   color: var(--color-text);
   line-height: 1.6;
   background-color: var(--color-white);
-  overflow-x: hidden;
+  overflow-x: clip;
 }
 
 h1,
