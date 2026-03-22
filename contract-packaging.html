@@ -21,59 +21,12 @@
 
 <body>
 
-    <!-- Top Visitor Banner -->
-    <div class="top-banner" id="visitor-banner">
-        <div class="banner-content container">
-            <div class="banner-text">
-                <i class="fa-solid fa-eye mr-2" style="color: var(--color-accent); font-size: 1.1rem;"></i>
-                <span style="opacity: 0.9;">Website Views: </span>
-                <span id="visitor-count" class="countdown-timer" style="margin: 0 8px; font-size: 1rem;">-----</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Visitor Count Logic -->
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const baseDate = new Date('2026-03-01T00:00:00').getTime();
-            const now = new Date().getTime();
-            const daysPassed = Math.floor((now - baseDate) / (1000 * 60 * 60 * 24));
-            let baseCount = 18456;
-            let targetCount = baseCount + (Math.max(0, daysPassed) * 2);
-            const hourOffset = new Date().getHours() % 4;
-            targetCount += hourOffset;
-            const counterElement = document.getElementById('visitor-count');
-            let currentCount = 0;
-            const formatNumber = (num) => new Intl.NumberFormat('en-IN').format(num);
-            function animate() {
-                if (currentCount < 100) {
-                    currentCount += 5;
-                    counterElement.innerText = formatNumber(currentCount);
-                    setTimeout(animate, 60);
-                } else if (currentCount < targetCount - 60) {
-                    const jump = Math.ceil((targetCount - currentCount) / 12);
-                    currentCount += jump;
-                    counterElement.innerText = formatNumber(currentCount);
-                    setTimeout(animate, 25);
-                } else if (currentCount < targetCount) {
-                    currentCount += 1;
-                    counterElement.innerText = formatNumber(currentCount);
-                    const remaining = targetCount - currentCount;
-                    const delay = 180 - (remaining * 2);
-                    setTimeout(animate, Math.max(100, delay));
-                } else {
-                    counterElement.innerText = formatNumber(targetCount);
-                }
-            }
-            animate();
-        });
-    </script>
 
     <div id="header-root"></div>
 
     <!-- Hero Section -->
     <section class="section text-white position-relative"
-        style="padding: 10rem 0 8rem; min-height: 60vh; display: flex; align-items: center; background: linear-gradient(rgba(9, 24, 46, 0.9), rgba(9, 26, 53, 0.9)), url('assets/asrs_mockup.png') center/cover no-repeat;">
+        style="padding: 10rem 0 5rem; min-height: 50vh; display: flex; align-items: center; background: linear-gradient(rgba(9, 24, 46, 0.9), rgba(9, 26, 53, 0.9)), url('assets/asrs_mockup.png') center/cover no-repeat;">
         <div class="container text-center animate__animated animate__fadeIn">
             <span class="badge mb-3">
                 India's Leading Third Party Packaging & Manufacturing

@@ -18,7 +18,7 @@ window.SALVIN_COMPONENTS = {
             <ul class="nav-links">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="about.html">About</a></li>
-                <li><a href="#">Machineries</a></li>
+                <li><a href="machineries.html">Machineries</a></li>
                 <li><a href="projects.html">Project</a></li>
                 <li><a href="contract-packaging.html">Contract packaging</a></li>
                 <li><a href="contact.html" class="btn btn-secondary nav-cta cta-trigger">Contact us</a></li>
@@ -57,7 +57,7 @@ window.SALVIN_COMPONENTS = {
             <h4>Services</h4>
             <ul>
                 <li><a href="projects.html">Turnkey Project</a></li>
-                <li><a href="services.html">Machineries</a></li>
+                <li><a href="machineries.html">Machineries</a></li>
                 <li><a href="contract-packaging.html">Contract Packaging</a></li>
             </ul>
         </div>
