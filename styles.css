@@ -3046,8 +3046,8 @@ textarea:focus {
 
 /* --- Talk with Keval Specific Styles --- */
 .talk-hero {
-    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
-    padding: 8rem 0 4rem;
+    background: linear-gradient(135deg, var(--color-dark) 0%, #2D3748 100%);
+    padding: 5rem 0 3rem;
     color: white;
     text-align: center;
 }
