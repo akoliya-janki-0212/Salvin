@@ -194,7 +194,7 @@ async function renderPastVideos() {
         // Use the new field names 'name' and 'video' as requested
         const videoTitle = video.name || video.Name || video.Title || video.title || 'Past Session';
         let videoUrl = video.video || video.Video || video.URL || video.url || '';
-        
+
         // Handle Airtable Attachment (if user uploaded a file instead of a link)
         if (Array.isArray(videoUrl) && videoUrl.length > 0) {
             videoUrl = videoUrl[0].url;
