@@ -4190,22 +4190,19 @@ textarea:focus {
 
 .price-simple {
   display: flex;
-  align-items: center;
+  align-items: baseline;
   gap: 1.25rem;
   margin-top: 1.5rem;
 }
 
 .price-current {
-  font-size: 2.2rem;
+  font-size: 1.8rem;
   font-weight: 800;
-  color: #0f172a; /* Deep dark blue/black like the image */
-  background: transparent;
-  padding: 0;
-  border: none;
+  color: #0f172a;
 }
 
 .price-original {
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   color: #94a3b8;
   text-decoration: line-through;
   font-weight: 500;

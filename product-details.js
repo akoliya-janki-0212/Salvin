@@ -23,6 +23,16 @@ function getProductImages(record) {
     return [fieldData]; // Return string URL in array
 }
 
+// Single Image Helper for Similar Products
+function getProductThumb(record) {
+    const fieldData = record.image || record.Image || record.ImageURL || record.imageurl;
+    if (!fieldData) return 'assets/placeholder-spare.jpg';
+    if (Array.isArray(fieldData) && fieldData.length > 0) {
+        return fieldData[0].url; 
+    }
+    return fieldData; 
+}
+
 async function fetchProductDetails(recordId) {
     const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}/${recordId}`;
 
@@ -128,7 +138,7 @@ async function renderProductDetails(product) {
     // Pricing - EXACT COLUMN NAMES: Price, Selling Price
     // We parse as number to avoid comparison issues
     const price = parseFloat(product.Price || product.price || 0);
-    const sellingPrice = parseFloat(product['Selling Price'] || product.selling_price || product['selling price'] || price);
+    const sellingPrice = parseFloat(product['Selling Price'] || product.SellingPrice || product['selling price'] || price);
 
     const images = getProductImages(product);
     const description = product.Description || product.description || product.DescriptionText || 'Quality industrial spare part.';
@@ -222,10 +232,11 @@ async function renderProductDetails(product) {
                 <h3 class="section-title mb-4" style="text-align: left;">Similar <span class="highlight">Products</span></h3>
                 <div class="grid-4">
                     ${similarProducts.map(p => {
-                        const img = p.image ? (Array.isArray(p.image) ? p.image[0].url : p.image) : 'assets/placeholder-spare.jpg';
+                        const img = getProductThumb(p);
                         const pName = p.product_name || p.Name || 'Unnamed';
-                        const pPrice = parseFloat(p.price || 0);
-                        const pSellingPrice = parseFloat(p.selling_price || p['Selling Price'] || pPrice);
+                        const pPrice = parseFloat(p.Price || p.price || 0);
+                        const pSellingPrice = parseFloat(p['Selling Price'] || p.SellingPrice || p.selling_price || pPrice);
+
                         return `
                             <div class="product-card">
                                 <div class="product-img-container">
