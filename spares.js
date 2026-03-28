@@ -70,7 +70,7 @@ function renderProducts(products) {
         const sellingPrice = product.selling_price || product['selling price'] || product.SellingPrice || product.SalePrice || price;
 
         return `
-            <div class="product-card animate__animated animate__fadeInUp">
+            <div class="product-card">
                 <div class="product-img-container">
                     <img src="${imgUrl}" alt="${name}" class="product-img">
                 </div>
@@ -80,7 +80,7 @@ function renderProducts(products) {
                     <div class="product-footer">
                         <div class="product-price-column">
                             <span class="price-main">₹${sellingPrice}</span>
-                            ${price > sellingPrice ? `<span class="price-strikethrough">₹${price}</span>` : ''}
+                            ${price ? `<span class="price-strikethrough">₹${price}</span>` : ''}
                         </div>
                         <div class="product-divider"></div>
                         <div class="product-action" onclick="window.location.href='product-details.html?id=${product.id}'">

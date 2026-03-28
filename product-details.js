@@ -71,17 +71,17 @@ function renderProductDetails(product) {
     container.innerHTML = `
         <div class="details-grid mt-5">
             <!-- Product Information -->
-            <div class="details-image-container animate__animated animate__fadeIn">
+            <div class="details-image-container">
                 <img src="${imgUrl}" alt="${name}">
             </div>
             
-            <div class="details-content animate__animated animate__fadeInRight">
+            <div class="details-content">
                 <span class="details-sku">PRODUCT ID: ${idString}</span>
                 <h1>${name}</h1>
                 
                 <div class="details-price-wrapper">
                     <span class="price-now">₹${sellingPrice}</span>
-                    ${price > sellingPrice ? `<span class="price-was">ORIGNAL ₹${price}</span>` : ''}
+                    ${price ? `<span class="price-was">ORIGINAL ₹${price}</span>` : ''}
                 </div>
                 
                 <p class="mb-5 text-muted" style="font-size: 1.1rem; line-height: 1.8;">
