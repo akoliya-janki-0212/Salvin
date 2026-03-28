@@ -114,9 +114,8 @@ function renderProducts(products) {
                     <h3 class="product-title">${name}</h3>
                     
                     <div class="product-footer">
-                        <div class="product-price-column">
-                            <span class="price-main">₹${sellingPrice}</span>
-                            ${price ? `<span class="price-strikethrough">₹${price}</span>` : ''}
+                        <div class="product-price-column" style="cursor: pointer;" onclick="event.stopPropagation(); orderOnWhatsApp('${id}', '${name}')">
+                            <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
                         </div>
                         <div class="product-divider"></div>
                         <div class="product-action" onclick="window.location.href='product-details.html?id=${product.id}'">

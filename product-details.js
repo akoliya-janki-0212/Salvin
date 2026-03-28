@@ -28,9 +28,9 @@ function getProductThumb(record) {
     const fieldData = record.image || record.Image || record.ImageURL || record.imageurl;
     if (!fieldData) return 'assets/placeholder-spare.jpg';
     if (Array.isArray(fieldData) && fieldData.length > 0) {
-        return fieldData[0].url; 
+        return fieldData[0].url;
     }
-    return fieldData; 
+    return fieldData;
 }
 
 async function fetchProductDetails(recordId) {
@@ -180,11 +180,6 @@ async function renderProductDetails(product) {
                 </div>
                 <h1 class="product-h1 mb-4">${name}</h1>
                 
-                <div class="price-simple mb-5">
-                    <span class="price-current">₹${sellingPrice}</span>
-                    ${(price && price != sellingPrice) ? `<span class="price-original">₹${price}</span>` : ''}
-                </div>
-                
                 <div class="attributes-grid mb-4">
                     <div class="attr-row"><span>Category</span><strong>${resolvedCategory}</strong></div>
                     <div class="attr-row"><span>Brand</span><strong>${resolvedBrand}</strong></div>
@@ -192,7 +187,7 @@ async function renderProductDetails(product) {
 
                 <div class="action-buttons mb-5">
                     <button class="btn btn-primary-whatsapp w-100 mb-3" onclick="orderOnWhatsApp('${idString}', '${name}')">
-                        <i class="fa-brands fa-whatsapp me-2"></i> ORDER NOW ON WHATSAPP
+                        <i class="fa-brands fa-whatsapp me-2"></i> GET A QUOTE
                     </button>
                     <button class="btn btn-outline-share w-100" onclick="shareProduct('${name}')">
                         <i class="fa-solid fa-share-nodes me-2"></i> Share Product
@@ -232,12 +227,12 @@ async function renderProductDetails(product) {
                 <h3 class="section-title mb-4" style="text-align: left;">Similar <span class="highlight">Products</span></h3>
                 <div class="grid-4">
                     ${similarProducts.map(p => {
-                        const img = getProductThumb(p);
-                        const pName = p.product_name || p.Name || 'Unnamed';
-                        const pPrice = parseFloat(p.Price || p.price || 0);
-                        const pSellingPrice = parseFloat(p['Selling Price'] || p.SellingPrice || p.selling_price || pPrice);
+        const img = getProductThumb(p);
+        const pName = p.product_name || p.Name || 'Unnamed';
+        const pPrice = parseFloat(p.Price || p.price || 0);
+        const pSellingPrice = parseFloat(p['Selling Price'] || p.SellingPrice || p.selling_price || pPrice);
 
-                        return `
+        return `
                             <div class="product-card">
                                 <div class="product-img-container">
                                     <img src="${img}" alt="${pName}" class="product-img">
@@ -245,9 +240,8 @@ async function renderProductDetails(product) {
                                 <div class="product-content">
                                     <h3 class="product-title">${pName}</h3>
                                     <div class="product-footer">
-                                        <div class="product-price-column">
-                                            <span class="price-main">₹${pSellingPrice}</span>
-                                            ${(pPrice && pPrice != pSellingPrice) ? `<span class="price-strikethrough">₹${pPrice}</span>` : ''}
+                                        <div class="product-price-column" style="cursor: pointer;" onclick="event.stopPropagation(); orderOnWhatsApp('${p.product_id || p.id}', '${pName}')">
+                                            <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
                                         </div>
                                         <div class="product-divider"></div>
                                         <div class="product-action" onclick="window.location.href='product-details.html?id=${p.id}'">
@@ -257,7 +251,7 @@ async function renderProductDetails(product) {
                                 </div>
                             </div>
                         `;
-                    }).join('')}
+    }).join('')}
                 </div>
             </div>
         ` : ''}
