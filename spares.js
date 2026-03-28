@@ -83,8 +83,8 @@ function renderProducts(products) {
                             ${price > sellingPrice ? `<span class="price-strikethrough">₹${price}</span>` : ''}
                         </div>
                         <div class="product-divider"></div>
-                        <div class="product-action" onclick="orderOnWhatsApp('${id}', '${name}')">
-                            <span>Order now</span>
+                        <div class="product-action" onclick="window.location.href='product-details.html?id=${product.id}'">
+                            <span>View More</span>
                         </div>
                     </div>
                 </div>
