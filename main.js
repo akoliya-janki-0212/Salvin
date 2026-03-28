@@ -99,26 +99,26 @@ document.addEventListener('DOMContentLoaded', async () => {
 
         // Auto-Trigger Popup (5 seconds)
         const currentPage = window.location.pathname.split('/').pop() || 'index.html';
-        
+
         // --- SELECTION CONTROL ---
         // For testing/verification: Show EVERY time (to ensure it works on all pages)
         // To revert to "once per session", uncomment the hasSeenPopup check below.
-        
+
         const storageKey = `salvin_popup_seen_${currentPage}`;
         const hasSeenPopup = sessionStorage.getItem(storageKey);
-        
+
         // if (!hasSeenPopup) { // Uncomment this line and the closing brace below to restore session logic
-            console.log(`Popup timer started for ${currentPage}... waiting 5 seconds`);
-            setTimeout(() => {
-                const activePopup = document.getElementById('bada-style-popup');
-                if (activePopup) {
-                    console.log("Showing popup now.");
-                    activePopup.style.display = 'flex';
-                    // sessionStorage.setItem(storageKey, 'true'); // Uncomment to record the view
-                } else {
-                    console.error("Popup overlay element #bada-style-popup not found in DOM!");
-                }
-            }, 5000);
+        console.log(`Popup timer started for ${currentPage}... waiting 5 seconds`);
+        setTimeout(() => {
+            const activePopup = document.getElementById('bada-style-popup');
+            if (activePopup) {
+                console.log("Showing popup now.");
+                // activePopup.style.display = 'flex';
+                // sessionStorage.setItem(storageKey, 'true'); // Uncomment to record the view
+            } else {
+                console.error("Popup overlay element #bada-style-popup not found in DOM!");
+            }
+        }, 5000);
         // }
 
         // Popup Form Submission

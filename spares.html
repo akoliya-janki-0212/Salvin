@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spares & Service | Industrial Materials | Salvin Industries</title>
+    <meta name="description"
+        content="Explore our wide range of industrial spares and materials including pneumatic, electronic, and electric components. Salvin Industries provides premium quality processing and packaging machinery spares.">
+    <meta name="keywords"
+        content="Pneumatic Materials, Electronic Materials, Electric Material, Packaging Machineries Spares, Processing Machineries Spares, Tools & Hardware, Service Engineer, Salvin Industries">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@500;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="icon" href="assets/favicon.png" type="image/png">
+</head>
+
+<body>
+
+    <div id="header-root"></div>
+
+    <!-- Hero Section -->
+    <section class="section text-white position-relative"
+        style="padding: 8rem 0 4rem; min-height: 40vh; display: flex; align-items: center; background: linear-gradient(rgba(9, 24, 46, 0.85), rgba(9, 26, 53, 0.85)), url('assets/asrs_mockup.png') center/cover no-repeat;">
+        <div class="container text-center animate__animated animate__fadeIn">
+            <span class="badge mb-3">Industrial Spares & Service</span>
+            <h1 class="hero-title text-white mb-4" style="font-size: clamp(2.2rem, 5vw, 3.5rem); font-weight: 800;">
+                Premium Quality Materials & Spares
+            </h1>
+            <p class="hero-subtitle mb-0 mx-auto" style="max-width: 800px; opacity: 0.9;">
+                Reliable components for your processing and packaging machinery. 
+                Everything you need to keep your production line running smoothly.
+            </p>
+        </div>
+    </section>
+
+    <!-- Product Listing Section -->
+    <section class="section">
+        <div class="container">
+            <div class="spares-layout">
+                <!-- Sidebar -->
+                <aside class="spares-sidebar">
+                    <h3 class="sidebar-title"><i class="fa-solid fa-filter"></i> Categories</h3>
+                    <div class="category-list" id="category-list">
+                        <!-- Categories will be rendered here -->
+                        <div class="category-item" data-id="0" data-name="All Materials" onclick="switchCategory(this)">
+                            All Materials <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item active" data-id="1" data-name="Pneumatic Materials" onclick="switchCategory(this)">
+                            Pneumatic Materials <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item" data-id="2" data-name="Electronic Materials" onclick="switchCategory(this)">
+                            Electronic Materials <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item" data-id="3" data-name="Electric Material" onclick="switchCategory(this)">
+                            Electric Material <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item" data-id="4" data-name="Packaging Machineries Spares" onclick="switchCategory(this)">
+                            Packaging Machineries Spares <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item" data-id="5" data-name="Processing Machineries Spares" onclick="switchCategory(this)">
+                            Processing Machineries Spares <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item" data-id="6" data-name="Tools & Hardware" onclick="switchCategory(this)">
+                            Tools & Hardware <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                        <div class="category-item" data-id="7" data-name="Service Engineer" onclick="switchCategory(this)">
+                            Service Engineer <i class="fa-solid fa-chevron-right"></i>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Product Grid Container -->
+                <main class="product-main">
+                    <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                        <h2 id="current-category-name" style="margin-bottom: 0;">Pneumatic Materials</h2>
+                        <span id="product-count" class="badge-count">Loading...</span>
+                    </div>
+                    
+                    <div id="product-grid" class="product-grid">
+                        <!-- Products will be rendered here -->
+                        <div class="text-center w-100 p-5" id="loader">
+                            <i class="fa-solid fa-circle-notch fa-spin fa-3x text-primary"></i>
+                            <p class="mt-3">Fetching products from Airtable...</p>
+                        </div>
+                    </div>
+                </main>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-root"></div>
+    <div id="popup-root"></div>
+
+    <script src="components.js"></script>
+    <script src="main.js"></script>
+    <script src="spares.js"></script>
+</body>
+
+</html>
