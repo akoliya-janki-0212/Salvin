@@ -3578,21 +3578,43 @@ textarea:focus {
 @media (max-width: 991px) {
     .spares-layout {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
     }
     
     .spares-sidebar {
         position: relative;
         top: 0;
         margin-bottom: 2rem;
+        padding: 1.5rem 0; /* Reduced padding and removed horizontal padding to avoid cutting */
+        background: transparent;
+        border: none;
+    }
+
+    .sidebar-title {
+        padding-left: 1rem;
+        margin-bottom: 1rem;
     }
     
     .category-list {
-        flex-direction: row;
-        overflow-x: auto;
-        padding-bottom: 1rem;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.75rem;
+        padding: 0 1rem 1.5rem 1rem; /* Added bottom padding */
     }
-    
+
     .category-item {
-        white-space: nowrap;
+        white-space: normal; /* Allow text wrapping for long category names */
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
+        text-align: center;
+        justify-content: center; /* Center horizontally in grid */
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+
+    .category-item i {
+        display: none; /* Keep arrows hidden to save space */
     }
 }
