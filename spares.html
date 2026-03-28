@@ -42,38 +42,9 @@
     <!-- Product Listing Section -->
     <section class="section">
         <div class="container container-wide">
-            <div class="spares-layout">
-                <!-- Sidebar -->
-                <aside class="spares-sidebar">
-                    <h3 class="sidebar-title"><i class="fa-solid fa-filter"></i> Categories</h3>
-                    <div class="category-list" id="category-list">
-                        <!-- Categories will be rendered here -->
-                        <div class="category-item" data-id="0" data-name="All Materials" onclick="switchCategory(this)">
-                            All Materials <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item active" data-id="1" data-name="Pneumatic Materials" onclick="switchCategory(this)">
-                            Pneumatic Materials <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item" data-id="2" data-name="Electronic Materials" onclick="switchCategory(this)">
-                            Electronic Materials <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item" data-id="3" data-name="Electric Material" onclick="switchCategory(this)">
-                            Electric Material <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item" data-id="4" data-name="Packaging Machineries Spares" onclick="switchCategory(this)">
-                            Packaging Machineries Spares <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item" data-id="5" data-name="Processing Machineries Spares" onclick="switchCategory(this)">
-                            Processing Machineries Spares <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item" data-id="6" data-name="Tools & Hardware" onclick="switchCategory(this)">
-                            Tools & Hardware <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                        <div class="category-item" data-id="7" data-name="Service Engineer" onclick="switchCategory(this)">
-                            Service Engineer <i class="fa-solid fa-chevron-right"></i>
-                        </div>
-                    </div>
-                </aside>
+            <div class="spares-layout single-col">
+                <!-- Dynamic Category Filter Container -->
+                <div id="category-filter-container"></div>
 
                 <!-- Product Grid Container -->
                 <main class="product-main">
