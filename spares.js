@@ -33,8 +33,8 @@ async function fetchProducts(catId, brandId) {
 
     const filterFormula = filters.length > 1 ? `AND(${filters.join(',')})` : (filters[0] || '');
     console.log("Generated Filter Formula:", filterFormula); // DEBUG LOG
-    
-    let url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}?maxRecords=100`;
+
+    let url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}?maxRecords=100&sort[0][field]=product_id&sort[0][direction]=asc`;
 
     if (filterFormula) {
         url += `&filterByFormula=${encodeURIComponent(filterFormula)}`;
@@ -72,6 +72,9 @@ async function fetchFilterOptions(tableName) {
                 id: customId || record.id, // Fallback to record.id only if truly missing
                 name: record.fields.naem || record.fields.Name || record.fields.name || 'Unnamed'
             };
+        }).sort((a, b) => {
+            // Robust alphanumeric sort (handles 1, 2, 10 correctly)
+            return String(a.id).localeCompare(String(b.id), undefined, { numeric: true, sensitivity: 'base' });
         });
     } catch (error) {
         console.error(`Fetch Error (${tableName}):`, error);
