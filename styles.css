@@ -1507,20 +1507,22 @@ textarea:focus {
 /* --- Floating Elements --- */
 .whatsapp-float {
   position: fixed;
-  bottom: 20px;
-  right: 20px;
-  background-color: #25D366;
-  color: white;
   width: 50px;
   height: 50px;
+  bottom: 20px;
+  left: 20px;
+  background-color: #25d366;
+  color: #fff;
   border-radius: 50%;
-  display: flex;
+  text-align: center;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+  z-index: 10001;
+  display: flex !important;
   align-items: center;
   justify-content: center;
-  font-size: 1.6rem;
-  box-shadow: var(--shadow-lg);
-  z-index: 1000;
-  transition: transform var(--transition-fast);
+  text-decoration: none;
+  transition: all 0.3s ease;
 }
 
 .whatsapp-float:hover {
@@ -4582,3 +4584,299 @@ textarea:focus {
     line-height: 1.6;
     font-weight: 500;
 }
+
+/* --- BPH Redesigned Modal --- */
+.bph-modal-content {
+    background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+    color: white;
+    border-radius: 12px;
+    padding: 0 !important;
+    overflow: hidden;
+    max-width: 500px !important;
+    position: relative;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bph-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 0.85rem;
+    cursor: pointer;
+    font-weight: 500;
+    z-index: 10;
+}
+
+.bph-modal-inner {
+    padding: 2.5rem 2rem;
+    text-align: center;
+}
+
+.bph-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.bph-subtitle {
+    font-size: 1rem;
+    line-height: 1.5;
+    opacity: 0.9;
+    margin-bottom: 2rem;
+}
+
+.bph-profile-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.bph-avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.bph-avatar img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+}
+
+.bph-info .bph-name {
+    display: block;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 2px;
+}
+
+.bph-info .bph-status {
+    display: block;
+    font-size: 0.85rem;
+    color: #4ade80;
+    font-weight: 600;
+}
+
+.bph-chat-btn {
+    background-color: #22c55e !important;
+    color: white !important;
+    padding: 12px 30px;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 1rem;
+    border: none;
+    transition: transform 0.2s ease;
+    width: 100%;
+}
+
+.bph-chat-btn:hover {
+    transform: translateY(-2px);
+    background-color: #16a34a !important;
+}
+
+/* --- Global Chat Widget --- */
+.chat-widget-wrapper {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    z-index: 9999;
+    font-family: 'Inter', sans-serif;
+}
+
+.chat-bubble {
+    width: 60px;
+    height: 60px;
+    background: #2563eb;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.8rem;
+    cursor: pointer;
+    box-shadow: 0 10px 25px rgba(37, 99, 235, 0.3);
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    margin: 0 30px 30px 0; /* Keeps bubble away from edge when visible */
+}
+
+.chat-bubble:hover {
+    transform: scale(1.1);
+}
+
+.chat-panel {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    width: 330px;
+    background: white;
+    border-radius: 0; /* Flush with bottom/right */
+    box-shadow: -5px 0 25px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border-left: 1px solid #eef2f6;
+    border-top: 1px solid #eef2f6;
+    animation: slideInRight 0.3s ease;
+}
+
+@keyframes slideInRight {
+    from { opacity: 0; transform: translateX(20px); }
+    to { opacity: 1; transform: translateX(0); }
+}
+
+.chat-header {
+    background: #4a90e2; /* Matching the reference blue more closely */
+    color: white;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chat-header-top {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.chat-header-user-card {
+    background: white;
+    border-radius: 4px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    color: #333;
+}
+
+.chat-header-user-card img {
+    width: 55px;
+    height: 55px;
+    border-radius: 4px;
+    object-fit: cover;
+    border: 1px solid #eee;
+}
+
+.chat-header-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-header-info .name {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: #1a1a1a;
+}
+
+.chat-header-info .status {
+    font-size: 0.75rem;
+    color: #666;
+}
+
+.chat-controls button {
+    background: transparent;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1rem;
+    opacity: 0.8;
+}
+
+.chat-controls button:hover {
+    opacity: 1;
+}
+
+.chat-body {
+    padding: 1.25rem;
+}
+
+.chat-greeting {
+    font-size: 0.85rem;
+    color: #475569;
+    margin-bottom: 1rem;
+    line-height: 1.4;
+}
+
+#chatForm input, #chatForm textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    font-size: 0.85rem;
+    font-family: inherit;
+}
+
+.chat-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+}
+
+#chatForm textarea {
+    height: 80px;
+    resize: none;
+}
+
+.chat-submit-btn {
+    width: 100%;
+    background: #2563eb;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.chat-submit-btn:hover {
+    background: #1d4ed8;
+}
+
+/* --- BPH Light Theme Modal --- */
+.bph-light-modal {
+    background: #ffffff !important;
+    background-image: radial-gradient(at 0% 0%, rgba(37, 99, 235, 0.05) 0, transparent 50%), 
+                      radial-gradient(at 50% 0%, rgba(37, 99, 235, 0.05) 0, transparent 50%) !important;
+    color: #1e293b !important;
+    border: 1px solid #e2e8f0 !important;
+}
+
+.bph-light-title {
+    color: #1e3a8a !important;
+}
+
+.bph-light-subtitle {
+    color: #475569 !important;
+    opacity: 1 !important;
+}
+
+.bph-light-close {
+    color: #94a3b8 !important;
+}
+
+.bph-light-avatar {
+    border: 3px solid #f1f5f9 !important;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.bph-light-name {
+    color: #1e3a8a !important;
+}
+

@@ -79,49 +79,64 @@ window.SALVIN_COMPONENTS = {
 `,
     popup: `
 <div id="bada-style-popup" class="modal-overlay" style="display: none;">
-    <div class="modal-content glass-morphism">
-        <button class="modal-close" id="closePopupBtn">&times;</button>
-        <div class="modal-header">
-            <h3>Secure Your Strategic Business Review</h3>
-            <p>Direct advisory for factory owners & industrial leaders looking to eliminate operational chaos with <strong>Salvin Industries</strong>.</p>
+    <div class="modal-content bph-modal-content bph-light-modal">
+        <button class="modal-close bph-close bph-light-close" id="closePopupBtn">&times; Close</button>
+        <div class="bph-modal-inner">
+            <h2 class="bph-title bph-light-title">Sir I Can Save Your Time!</h2>
+            <p class="bph-subtitle bph-light-subtitle">I give u best price & options for various services & machines u need. Let's discuss over chat... I'm waiting for your reply :)</p>
+            
+            <div class="bph-profile-card">
+                <div class="bph-avatar bph-light-avatar">
+                   <img src="assets/keval-gandhi.png" alt="Keval Gandhi - Director">
+                </div>
+                <div class="bph-info">
+                    <span class="bph-name bph-light-name">Keval Gandhi - Director</span>
+                    <span class="bph-status">Now Online</span>
+                </div>
+            </div>
+
+            <a href="https://wa.me/919023979663" target="_blank" class="btn bph-chat-btn">
+                <i class="fa-brands fa-whatsapp me-2"></i> CHAT WITH ME
+            </a>
         </div>
+    </div>
+</div>
+`,
+    chatWidget: `
+<div class="chat-widget-wrapper">
+    <!-- Chat Icon / Bubble -->
+    <div id="chatBubble" class="chat-bubble">
+        <i class="fa-solid fa-comments"></i>
+    </div>
 
-        <form id="popupForm" action="https://formspree.io/f/mlgpkkjj" method="POST">
-            <div class="form-group">
-                <input type="text" name="company_name" required placeholder="Company Name" class="input-light">
+    <!-- Expanded Chat Panel -->
+    <div id="chatPanel" class="chat-panel" style="display: none;">
+        <div class="chat-header">
+            <div class="chat-header-top">
+                <button onclick="window.toggleChatWidget()" class="chat-min-btn"><i class="fa-solid fa-minus"></i></button>
+                <button onclick="window.toggleChatWidget()" class="chat-close-btn"><i class="fa-solid fa-xmark"></i></button>
             </div>
-            <div class="form-group">
-                <input type="text" name="contact_person" required placeholder="Contact Person Name" class="input-light">
+            <div class="chat-header-user-card">
+                <img src="assets/keval-gandhi.png" alt="Profile">
+                <div class="chat-header-info">
+                    <span class="name">Keval Gandhi - Online Now</span>
+                    <span class="status">Direct Advisory</span>
+                </div>
             </div>
-            <div class="form-group">
-                <input type="email" name="email" required placeholder="Official Email ID" class="input-light">
-            </div>
-            <div class="form-group">
-                <input type="tel" name="mobile" required placeholder="Mobile Number"
-                    class="input-light">
-            </div>
-
-            <div class="form-group">
-                <select name="inquiry_for" required class="input-light">
-                    <option value="" disabled selected>Inquiry For</option>
-                    <option value="Packaging">Packaging</option>
-                    <option value="Machine">Machine</option>
-                    <option value="Turnkey Project">Turnkey Project</option>
-                    <option value="Other">Other</option>
-                </select>
-            </div>
-
-            <div class="form-group">
-                <textarea name="description" placeholder="Description / Message" class="input-light" 
-                    style="width:100%; padding:12px; border:1px solid #ddd; border-radius:4px; height:80px;"></textarea>
-            </div>
-
-            <button type="submit" class="btn btn-primary btn-block mt-3">Request Immediate Consultation <i
-                    class="fa-solid fa-paper-plane"></i></button>
-            <p id="popupSuccessMessage" class="success-message"
-                style="display: none; color: #28a745; margin-top: 10px; font-weight: 600; text-align:center;">Strategic
-                insight requested. Check your WhatsApp shortly.</p>
-        </form>
+        </div>
+        <div class="chat-body">
+            <p class="chat-greeting" style="font-weight: 500; color: #444; margin-bottom: 12px;">Welcome! Pls enter your details and start chat.</p>
+            <form id="chatForm" action="https://formspree.io/f/mlgpkkjj" method="POST">
+                <div class="chat-form-row">
+                    <input type="text" name="name" placeholder="Name*" required>
+                    <input type="email" name="email" placeholder="E-mail*" required>
+                </div>
+                <input type="tel" name="phone" placeholder="Phone*" required>
+                <textarea name="message" placeholder="Your Message" required></textarea>
+                <button type="submit" class="chat-submit-btn">Send Message</button>
+                <p id="chatFormSuccess" style="display:none; color: green; font-size: 0.8rem; text-align:center; margin-top: 5px;">Sent! We'll reply on WhatsApp.</p>
+            </form>
+        </div>
     </div>
 </div>
 `

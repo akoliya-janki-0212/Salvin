@@ -16,10 +16,19 @@ document.addEventListener('DOMContentLoaded', async () => {
             const headerRoot = document.getElementById('header-root');
             const footerRoot = document.getElementById('footer-root');
             const popupRoot = document.getElementById('popup-root');
+            
+            // Re-setup chat-root if not present
+            let chatRoot = document.getElementById('chat-root');
+            if (!chatRoot) {
+                chatRoot = document.createElement('div');
+                chatRoot.id = 'chat-root';
+                document.body.appendChild(chatRoot);
+            }
 
             if (headerRoot) headerRoot.innerHTML = headerHTML;
             if (footerRoot) footerRoot.innerHTML = footerHTML;
             if (popupRoot) popupRoot.innerHTML = popupHTML;
+            if (chatRoot) chatRoot.innerHTML = window.SALVIN_COMPONENTS.chatWidget;
 
             // Re-initialize logic that depends on these components
             initializeComponentLogic();
@@ -158,6 +167,69 @@ document.addEventListener('DOMContentLoaded', async () => {
                     btn.innerHTML = 'Error. Try Again.';
                     btn.disabled = false;
                     console.error('Submission error:', error);
+                }
+            });
+        }
+
+        // --- NEW CHAT WIDGET LOGIC ---
+        const chatBubble = document.getElementById('chatBubble');
+        const chatPanel = document.getElementById('chatPanel');
+        const chatForm = document.getElementById('chatForm');
+
+        window.toggleChatWidget = function(saveState = true) {
+            if (chatPanel) {
+                const isHidden = chatPanel.style.display === 'none' || chatPanel.style.display === '';
+                chatPanel.style.display = isHidden ? 'flex' : 'none';
+                if (chatBubble) chatBubble.style.display = isHidden ? 'none' : 'flex';
+                
+                if (saveState) {
+                    localStorage.setItem('chatWidgetOpen', isHidden ? 'true' : 'false');
+                }
+            }
+        };
+
+        // Check persistence - Re-open if it was open on the last page
+        if (localStorage.getItem('chatWidgetOpen') === 'true') {
+            window.toggleChatWidget(false);
+        }
+
+        if (chatBubble) {
+            chatBubble.addEventListener('click', () => window.toggleChatWidget(true));
+        }
+
+        if (chatForm) {
+            chatForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const btn = chatForm.querySelector('button[type="submit"]');
+                const successMsg = document.getElementById('chatFormSuccess');
+                const originalText = btn.innerHTML;
+
+                btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+                btn.disabled = true;
+
+                try {
+                    const response = await fetch(chatForm.action, {
+                        method: 'POST',
+                        body: new FormData(chatForm),
+                        headers: { 'Accept': 'application/json' }
+                    });
+
+                    if (response.ok) {
+                        btn.innerHTML = 'Sent!';
+                        chatForm.reset();
+                        localStorage.setItem('chatWidgetOpen', 'false'); // Close on success
+
+                        if (successMsg) successMsg.style.display = 'block';
+                        setTimeout(() => {
+                            window.toggleChatWidget();
+                            btn.innerHTML = originalText;
+                            btn.disabled = false;
+                            if (successMsg) successMsg.style.display = 'none';
+                        }, 2000);
+                    } else { throw new Error('Submission failed'); }
+                } catch (error) {
+                    btn.innerHTML = 'Error. Try Again.';
+                    btn.disabled = false;
                 }
             });
         }
