@@ -59,25 +59,32 @@
     <section class="section py-5 bg-light-cyan">
         <div class="container">
             <div class="text-center mb-5 mt-4">
-                <span class="badge mb-2 badge-primary-light">CORE
-                    FOCUS</span>
                 <h2 class="section-title">Specialized <span class="highlight">Capabilities</span></h2>
                 <p class="section-subtitle-centered">Advanced engineering
                     tailored to specific industrial requirements, breaking the limits of standardized equipment.</p>
             </div>
 
-            <div class="tech-toggle-wrapper tech-toggle-wrapper-max">
-                <div class="tech-tabs grid-2 mb-4">
+            <div class="tech-toggle-horizontal">
+                <div class="tech-tabs-sidebar">
                     <button class="tech-tab-btn active shadow-sm" onclick="switchTechTab('spm')">
-                        <i class="fa-solid fa-cogs fs-2 mb-3 d-block text-primary"></i>
-                        <span class="fw-bold fs-5">SPM Design</span>
-                        <p class="mt-2 mb-0 d-none d-md-block text-muted text-sm fw-normal">Special Purpose Machines</p>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-cogs fs-4 text-primary"></i>
+                            <div class="text-start">
+                                <span class="fw-bold fs-6 d-block">SPM Design</span>
+                                <p class="mb-0 d-none d-md-block text-muted text-xs fw-normal">Special Purpose Machines
+                                </p>
+                            </div>
+                        </div>
                     </button>
                     <button class="tech-tab-btn shadow-sm" onclick="switchTechTab('automation')">
-                        <i class="fa-solid fa-network-wired fs-2 mb-3 d-block text-accent"></i>
-                        <span class="fw-bold fs-5">Automation 4.0</span>
-                        <p class="mt-2 mb-0 d-none d-md-block text-muted text-sm fw-normal">Smart Factory Integration
-                        </p>
+                        <div class="d-flex align-items-center gap-3">
+                            <i class="fa-solid fa-network-wired fs-4 text-accent"></i>
+                            <div class="text-start">
+                                <span class="fw-bold fs-6 d-block">Automation 4.0</span>
+                                <p class="mb-0 d-none d-md-block text-muted text-xs fw-normal">Smart Factory Integration
+                                </p>
+                            </div>
+                        </div>
                     </button>
                 </div>
 
@@ -157,311 +164,61 @@
         }
     </script>
 
-    <!-- Machine Categories Grid -->
-    <section id="machine-grid" class="section py-5">
+    <!-- Machine Categories Grid (Dynamic) -->
+    <section id="machine-grid" class="section py-5 bg-white">
         <div class="container">
-            <!-- 1. FOOD PROCESSING SECTION -->
-            <div class="section-header text-center mb-5">
-                <h2 class="section-title mt-2">Food Processing <span class="highlight">Machines</span></h2>
-                <p class="section-description mx-auto portfolio-desc">A cross-section of our highly
-                    specialized manufacturing systems for commercial food preparation and safety.</p>
-            </div>
-
-            <div class="machine-features-list mb-5 pb-5">
-                <!-- Machine 1: Slicer (Image Left) -->
-                <div class="alternating-machine-row animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/slicers.png" alt="Commercial Food Slicer"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
+            <!-- Horizontal Unified Filter Row -->
+            <div class="machinery-horizontal-filter p-4 mb-5 rounded-4 shadow-sm"
+                style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 20px;">
+                <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                    <!-- Unit: Machine Type Selection -->
+                    <div class="d-flex align-items-center gap-3 mb-2 mb-lg-0">
+                        <div id="main-category-tabs-v3"
+                            class="main-category-tabs-v3 d-flex gap-2 p-1 bg-white border rounded-pill">
+                            <button class="btn-main-cat-v3 active px-4 py-2 rounded-pill fw-bold"
+                                onclick="switchMainCategory('Processing Machineries', this)">Processing
+                                Machinery</button>
+                            <button class="btn-main-cat-v3 px-4 py-2 rounded-pill fw-bold"
+                                onclick="switchMainCategory('Packaging Machineries', this)">Packaging
+                                Machinery</button>
                         </div>
                     </div>
-                    <div class="machine-row-content">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">FOOD
-                            PROCESSING</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Commercial Slicers</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Automate your food preparation with our heavy-duty <strong>commercial slicer
-                                machines</strong>. Designed for fruits, vegetables, and meats, our precision slicers
-                            deliver uniform cuts at high speeds. Perfect for large-scale food processing plants looking
-                            to increase efficiency and reduce labor costs.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Adjustable precision cut</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> High-speed automated</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Hygienic
-                                SS design</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <!-- Machine 2: Washer (Image Right / Reverse) -->
-                <div class="alternating-machine-row reverse animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/washer.png" alt="Industrial Fruit Washer"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
-                        </div>
-                    </div>
-                    <div class="machine-row-content text-end text-md-start">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">WASHING &
-                            CLEANING</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Industrial Veg Washers</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Ensure 100% food safety with our fully automated <strong>commercial washing
-                                machines</strong>. Using advanced high-pressure bubble washing, our equipment expertly
-                            removes dirt, pesticides, and bacteria from fresh produce, serving as the ultimate solution
-                            for food exporters and packhouses.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Bubble wash technology</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Water recycling system</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Safe for
-                                delicate produce</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Machine 3: Mass Blenders (Image Left) -->
-                <div class="alternating-machine-row animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/industrial_mixer.png" alt="Industrial Mass Blender & Mixer"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
-                        </div>
-                    </div>
-                    <div class="machine-row-content">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">MIXING &
-                            BLENDING</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Industrial Mass Blenders</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Achieve perfect homogeneity with our heavy-duty <strong>commercial mass blenders</strong>
-                            and ribbon mixers. Engineered specifically for dry powders, granules, and spices, our
-                            industrial blending machines ensure uniform mixing in large batches, drastically reducing
-                            your production time.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Uniform dry powder mixing</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Heavy-duty ribbon structure</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i>
-                                Fast-discharge rotation design</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Machine 4: Dryers & Dehydrators (Image Right / Reverse) -->
-                <div class="alternating-machine-row reverse animate-on-scroll fade-up" style="margin-bottom: 0;">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/dryer.png" alt="Commercial Food Dehydrator & Dryer"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
-                        </div>
-                    </div>
-                    <div class="machine-row-content text-end text-md-start">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">DRYING &
-                            DEHYDRATION</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Commercial Dehydrators</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Preserve core nutritional value and extend shelf life using our <strong>industrial tray
-                                dryers</strong>. Designed for fruits, vegetables, herbs, and spices, our commercial
-                            drying equipment maintains consistent air flow and precise temperature control for optimal
-                            moisture removal.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Uniform heat distribution</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Digital temperature controls</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Maximum
-                                moisture extraction</li>
-                        </ul>
+                    <!-- Unit: Sub Category Selection -->
+                    <div class="d-flex align-items-center gap-3">
+                        <label class=""><span>Select Sub
+                                Category:</span></label>
+                        <select id="sub-category-select-v3"
+                            class="form-select professional-select-v3 rounded-pill border-2"
+                            style="width: auto; min-width: 250px;" onchange="switchSubCategory(this.value)">
+                            <option value="All">All Categories</option>
+                        </select>
                     </div>
                 </div>
             </div>
 
-            <!-- 2. SPICE & POWDER PROCESSING SECTION -->
-            <div class="section-header text-center mb-5 mt-5 pt-5 border-top">
-                <h2 class="section-title mt-2">Spice & Powder <span class="highlight">Processing</span></h2>
-                <p class="section-description mx-auto portfolio-desc">End-to-end processing solutions for grinding,
-                    mixing, and producing ultra-fine spices.</p>
-            </div>
-
-            <div class="machine-features-list mb-5 pb-4">
-                <!-- Machine 1: Pulverizer (Image Left) -->
-                <div class="alternating-machine-row animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/pervalizer.png" alt="Industrial Pulverizer Machine"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
+            <div class="row">
+                <div class="col-12">
+                    <main class="machinery-main-content">
+                        <!-- Results Header (Pill Design) -->
+                        <div class="d-flex align-items-center gap-3 mt-5 mb-5 border-bottom pb-4">
+                            <h2 class="fw-bold mb-0" style="font-size: 1.8rem; color: #1e293b;">Filtered Results</h2>
+                            <span id="machine-results-count" class="badge rounded-pill px-4 py-2 fw-bold" style="font-size: 0.9rem; background: #fff !important; color: #475569 !important; border: 2px solid #ff6b35; box-shadow: 0 4px 12px rgba(255, 107, 53, 0.15); letter-spacing: 0.05rem;">0 PRODUCTS</span>
                         </div>
-                    </div>
-                    <div class="machine-row-content">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">POWDER &
-                            SPICES</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Industrial Pulverizers</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Salvin's high-speed <strong>industrial pulverizer machines</strong> are designed for the
-                            fine grinding of spices, grains, and food products. Built with SS304 stainless steel, our
-                            pulverizers ensure maximum output, dust-free operation, and consistent food-grade powder
-                            quality.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Commercial spice grinding</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> High-capacity processing</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Dust-free
-                                cyclone system</li>
-                        </ul>
-                    </div>
-                </div>
 
-                <!-- Machine 2: Automated Spice Plant (Image Right) -->
-                <div class="alternating-machine-row reverse animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/fully_automatic.png" alt="Automated Spice Processing Plant"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
+                        <div id="dynamic-machine-grid" class="grid-4">
+                            <!-- Premium Pulse Loader -->
+                            <div class="text-center w-100 py-5" id="machine-loader" style="grid-column: 1 / -1;">
+                                <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;"
+                                    role="status"></div>
+                                <p class="text-muted fw-bold">Synchronizing Catalog...</p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="machine-row-content text-end text-md-start">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">TURNKEY
-                            PLANTS</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Automated Spice Plants</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Design and set up your complete <strong>commercial spice processing plant</strong> with our
-                            turnkey automation solutions. From cleaning and roasting to multi-stage grinding and
-                            sifting, our systems handle massive capacities of turmeric, coriander, chilli, and mixed
-                            spices without manual intervention.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Multi-stage continuous grinding</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Automated material handling</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Retention
-                                of aroma and essential oils</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 3. ADVANCED PACKAGING SOLUTIONS SECTION -->
-            <div class="section-header text-center mb-5 mt-5 pt-5 border-top">
-                <h2 class="section-title mt-2">Advanced Packaging <span class="highlight">Solutions</span></h2>
-                <p class="section-description mx-auto portfolio-desc">High-speed packaging and filling machines tailored
-                    for chocolates, biscuits, powders, and viscous liquids.</p>
-            </div>
-
-            <div class="machine-features-list mb-5 pb-4">
-                <!-- Machine 1: Pouch Packaging (Image Left) -->
-                <div class="alternating-machine-row animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/pouce_packaging.png" alt="Fully Automatic Pouch Packaging Machine"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
-                        </div>
-                    </div>
-                    <div class="machine-row-content">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">PACKAGING &
-                            SEALING</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Pouch Packaging Machines</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Streamline your packaging process with our <strong>fully automatic pouch packaging
-                                machines</strong>. Specifically engineered for snacks, spices, grains, and liquids,
-                            these robust systems integrate precise volumetric filling, airtight nitrogen flushing, and
-                            secure heat sealing into a single compact, high-speed unit.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Multi-head weighing integration</li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> High-speed airtight continuous
-                                sealing</li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Perfect
-                                for dry solids, granules, & liquids</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-
-            <!-- 4. PRECISION FILLING & CAPPING SECTION -->
-            <div class="section-header text-center mb-5 mt-5 pt-5 border-top">
-                <h2 class="section-title mt-2">Precision Filling & <span class="highlight">Capping</span></h2>
-                <p class="section-description mx-auto portfolio-desc">Tailor-made liquid and powder filling machines,
-                    alongside specialized high-speed capping systems.</p>
-            </div>
-
-            <div class="machine-features-list mb-5 pb-4">
-                <!-- Machine 1: Liquid Filling (Image Left) -->
-                <div class="alternating-machine-row animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/filling.png" alt="Precision Liquid and Powder Filling Machine"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
-                        </div>
-                    </div>
-                    <div class="machine-row-content">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">LIQUID &
-                            POWDER</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Automated Filling Machines</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Achieve unmatched accuracy and eliminate product waste with our <strong>industrial filling
-                                machines</strong>. Specialized for both viscous liquids and fine powders, our
-                            GMP-compliant fillers use advanced volumetric and auger-based intelligence to guarantee
-                            exact fill weights across every single container, bottle, or jar.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Servo-driven auger & piston systems
-                            </li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> No-bottle, no-fill sensor technology
-                            </li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> GMP
-                                compliant SS316 contact parts</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <!-- Machine 2: Capping & Sealing (Image Right) -->
-                <div class="alternating-machine-row reverse animate-on-scroll fade-up">
-                    <div class="machine-row-image">
-                        <div style="height: auto; padding: 10px; display: flex; justify-content: center;">
-                            <img src="assets/cap_seeling.png" alt="Industrial Capping and Sealing Machine"
-                                class="machine-card-img machine-zoom w-100"
-                                style="max-height: 380px; object-fit: contain;">
-                        </div>
-                    </div>
-                    <div class="machine-row-content text-end text-md-start">
-                        <span class="badge mb-2 mb-md-3 badge-primary-light" style="font-size: 0.65rem;">CLOSURE
-                            SYSTEMS</span>
-                        <h3 class="fw-bold mb-2 mb-md-3 display-6 fs-5 fs-md-2">Capping & Sealing Systems</h3>
-                        <p class="text-muted mb-3 d-none d-md-block" style="line-height: 1.8; font-size: 1.1rem;">
-                            Secure your products securely with our heavy-duty <strong>capping and sealing
-                                systems</strong>. From robust screw cappers to high-speed induction sealers, our closure
-                            technology guarantees a leak-proof and tamper-evident finish for bottles of all shapes and
-                            sizes, integrating seamlessly into your existing production line.
-                        </p>
-                        <ul class="list-unstyled d-flex flex-column gap-1 gap-md-2 mb-0 text-muted"
-                            style="font-size: 0.85rem;">
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Automatic cap sorting and feeding
-                            </li>
-                            <li><i class="fa-solid fa-check text-primary me-1"></i> Adjustable torque control systems
-                            </li>
-                            <li class="d-none d-md-block"><i class="fa-solid fa-check text-primary me-1"></i> Seamless
-                                conveyor synchronization</li>
-                        </ul>
-                    </div>
+                    </main>
                 </div>
             </div>
         </div>
+    </section>
     </section>
 
     <!-- Why Our Machineries Best (Animated) -->
@@ -565,6 +322,7 @@
 
     <div id="footer-root"></div>
     <div id="popup-root"></div>
+    <script src="machineries.js"></script>
     <script src="components.js"></script>
     <script src="main.js"></script>
 </body>

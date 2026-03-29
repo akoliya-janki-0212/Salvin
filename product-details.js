@@ -15,6 +15,17 @@ const SPARES_CONFIG = {
     whatsappNumber: '919023979663'
 };
 
+const MACHINERY_CONFIG = {
+    apiKey: 'patzUZXi4xbEcJBtZ.b612407e01e31156ccba38758a352318eae8a69ad628fa26230186c4b30b36a7',
+    baseId: 'appkw4hlOEoVJZ7cn',
+    tableName: 'machineries',
+    categoryTable: 'machine_category',
+    technicalTable: 'machine_technical',
+    whatsappNumber: '919023979663'
+};
+
+let currentConfig = SPARES_CONFIG; // Default to spares
+
 // Helper to get image URL(s) from Airtable (String or Attachment Array)
 function getProductImages(record) {
     const fieldData = record.image || record.Image || record.ImageURL || record.imageurl;
@@ -37,12 +48,13 @@ function getProductThumb(record) {
 
 // Terms & Conditions Helper
 async function fetchProductTerms() {
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.termsTable}`;
+    if (!currentConfig.termsTable) return [];
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${currentConfig.termsTable}`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
+                Authorization: `Bearer ${currentConfig.apiKey}`
             }
         });
         const data = await response.json();
@@ -55,13 +67,14 @@ async function fetchProductTerms() {
 
 // Review System Helpers
 async function fetchProductReviews(productId) {
+    if (!currentConfig.reviewTable) return [];
     const filterFormula = `{product_id} = "${productId}"`;
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.reviewTable}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${currentConfig.reviewTable}?filterByFormula=${encodeURIComponent(filterFormula)}`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
+                Authorization: `Bearer ${currentConfig.apiKey}`
             }
         });
         const data = await response.json();
@@ -73,13 +86,13 @@ async function fetchProductReviews(productId) {
 }
 
 async function submitProductReview(productId, rating) {
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.reviewTable}`;
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${currentConfig.reviewTable}`;
 
     try {
         const response = await fetch(url, {
             method: 'POST',
             headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`,
+                Authorization: `Bearer ${currentConfig.apiKey}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -144,16 +157,15 @@ window.previewStars = function (rating, container) {
 window.submitProductReview = submitProductReview;
 
 async function fetchProductDetails(recordId) {
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}/${recordId}`;
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${currentConfig.tableName}/${recordId}`;
 
     try {
         const response = await fetch(url, {
             headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
+                Authorization: `Bearer ${currentConfig.apiKey}`
             }
         });
         const data = await response.json();
-        console.log("Raw Product Response (Spares Table):", data); // CRITICAL DIAGNOSTIC
         return { id: data.id, ...data.fields };
     } catch (error) {
         console.error("Airtable Fetch Error:", error);
@@ -162,15 +174,12 @@ async function fetchProductDetails(recordId) {
 }
 
 async function fetchProductTechnical(productId) {
-    // productId is something like 'SAL-101'
     const filterFormula = `{product_id} = "${productId}"`;
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.technicalTable}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${currentConfig.technicalTable}?filterByFormula=${encodeURIComponent(filterFormula)}`;
 
     try {
         const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
-            }
+            headers: { Authorization: `Bearer ${currentConfig.apiKey}` }
         });
         const data = await response.json();
         return data.records.map(r => r.fields);
@@ -181,27 +190,20 @@ async function fetchProductTechnical(productId) {
 }
 
 async function fetchLookupName(tableName, recordValue) {
-    // If it's an array (from a lookup or link), take the first value
+    if (!tableName) return 'N/A';
     let customId = Array.isArray(recordValue) ? recordValue[0] : recordValue;
-
     if (customId === undefined || customId === null || customId === '' || customId === 'N/A') return 'N/A';
 
-    console.log(`Looking up ${tableName} name for ID: ${customId}`);
-
-    // Try finding the record where the {id} column matches our customId
     const filterFormula = `{id} = "${customId}"`;
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}&maxRecords=1`;
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${tableName}?filterByFormula=${encodeURIComponent(filterFormula)}&maxRecords=1`;
 
     try {
         const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
-            }
+            headers: { Authorization: `Bearer ${currentConfig.apiKey}` }
         });
         const data = await response.json();
         if (data.records && data.records.length > 0) {
             const fields = data.records[0].fields;
-            // Return 'naem' specifically as requested, or fallbacks
             return fields.naem || fields.Name || fields.name || 'Unknown';
         }
         return 'Not Found';
@@ -210,18 +212,17 @@ async function fetchLookupName(tableName, recordValue) {
         return 'N/A';
     }
 }
+
 async function fetchSimilarProducts(categoryId, currentId) {
-    // categoryId could be an ID like 1, 2, etc.
     if (!categoryId) return [];
 
-    const filterFormula = `AND({category_id} = "${categoryId}", RECORD_ID() != "${currentId}")`;
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}?filterByFormula=${encodeURIComponent(filterFormula)}&maxRecords=4`;
+    const catField = currentConfig === MACHINERY_CONFIG ? 'sub_category' : 'category_id';
+    const filterFormula = `AND({${catField}} = "${categoryId}", RECORD_ID() != "${currentId}")`;
+    const url = `https://api.airtable.com/v0/${currentConfig.baseId}/${currentConfig.tableName}?filterByFormula=${encodeURIComponent(filterFormula)}&maxRecords=4`;
 
     try {
         const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
-            }
+            headers: { Authorization: `Bearer ${currentConfig.apiKey}` }
         });
         const data = await response.json();
         return data.records.map(r => ({ id: r.id, ...r.fields }));
@@ -260,9 +261,9 @@ async function renderProductDetails(product) {
     // Parallel Fetching: Get all related data in one go
     const [technicalSpecs, similarProducts, resolvedCategory, resolvedBrand, reviews, terms] = await Promise.all([
         fetchProductTechnical(rawId),
-        fetchSimilarProducts(rawCategoryId, product.id),
-        fetchLookupName(SPARES_CONFIG.categoryTable, rawCategoryId),
-        fetchLookupName(SPARES_CONFIG.brandTable, rawBrandId),
+        fetchSimilarProducts(currentConfig === MACHINERY_CONFIG ? (product.sub_category?.[0] || product.sub_category) : rawCategoryId, product.id),
+        fetchLookupName(currentConfig.categoryTable, currentConfig === MACHINERY_CONFIG ? (product.sub_category?.[0] || product.sub_category) : rawCategoryId),
+        fetchLookupName(currentConfig.brandTable, rawBrandId),
         fetchProductReviews(rawId),
         fetchProductTerms()
     ]);
@@ -427,8 +428,8 @@ async function renderProductDetails(product) {
         ` : ''}
         
         <div class="mt-5 pt-5 text-center">
-            <a href="spares.html" class="btn btn-outline px-5">
-                <i class="fa-solid fa-arrow-left me-2"></i> Back to 120 Min Spares
+            <a href="${currentConfig === MACHINERY_CONFIG ? 'machineries.html' : 'spares.html'}" class="btn btn-outline px-5">
+                <i class="fa-solid fa-arrow-left me-2"></i> Back to ${currentConfig === MACHINERY_CONFIG ? 'Machineries' : '120 Min Spares'}
             </a>
         </div>
     `;
@@ -513,6 +514,11 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const urlParams = new URLSearchParams(window.location.search);
     const recordId = urlParams.get('id');
+    const type = urlParams.get('type');
+
+    if (type === 'machine') {
+        currentConfig = MACHINERY_CONFIG;
+    }
 
     if (recordId) {
         const product = await fetchProductDetails(recordId);

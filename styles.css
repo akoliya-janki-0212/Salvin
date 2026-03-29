@@ -3372,6 +3372,111 @@ textarea:focus {
   z-index: 1;
 }
 
+/* --- Premium Product Details (Condensed) --- */
+.details-grid-condensed {
+  display: grid;
+  grid-template-columns: 450px 1fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
+}
+
+@media (max-width: 991px) {
+  .details-grid-condensed {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+}
+
+.badge-mini {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: #fff0eb;
+  color: #ff6b35;
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  border-radius: 6px;
+  border: 1px solid rgba(255, 107, 53, 0.1);
+}
+
+.product-h1 {
+  font-weight: 800;
+  color: #1e293b;
+  line-height: 1.2;
+  margin-bottom: 1rem;
+}
+
+.specs-table-premium {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+
+.specs-table-premium tr {
+  transition: background 0.2s ease;
+}
+
+.specs-table-premium tr:nth-child(even) {
+  background: #f8fafc;
+}
+
+.specs-table-premium td {
+  padding: 1rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.specs-table-premium tr:last-child td {
+  border-bottom: none;
+}
+
+.spec-label {
+  width: 35%;
+  color: #64748b;
+  font-weight: 600;
+  border-right: 1px solid #f1f5f9;
+}
+
+.spec-value {
+  color: #1e293b;
+  font-weight: 700;
+}
+
+.description-text {
+  color: #475569;
+  line-height: 1.8;
+  font-size: 1rem;
+}
+
+.description-text br {
+  margin-bottom: 0.5rem;
+  display: block;
+  content: "";
+}
+
+.accordion-item {
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.accordion-header:hover {
+  background: #f1f5f9 !important;
+}
+
+.star-rating i {
+  transition: transform 0.2s ease;
+}
+
+.star-rating i:hover {
+  transform: scale(1.2);
+}
+
 /* --- News Slider --- */
 .news-swiper {
   width: 100%;
@@ -4879,4 +4984,85 @@ textarea:focus {
 .bph-light-name {
     color: #1e3a8a !important;
 }
-
+/* --- Dynamic Machinery Grid & Filters (Horizontal Unified Row) --- */
+.machinery-horizontal-filter {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 20px !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05) !important;
+}
+
+.main-category-tabs-v3 {
+    background: #f1f5f9 !important;
+    border: none !important;
+    padding: 6px !important;
+    display: inline-flex !important;
+    width: auto !important;
+    border-radius: 50px !important;
+}
+
+.btn-main-cat-v3 {
+    padding: 10px 24px !important;
+    font-size: 0.95rem !important;
+    font-weight: 700 !important;
+    color: #64748b !important;
+    border: none !important;
+    background: transparent !important;
+    transition: all 0.3s ease !important;
+    border-radius: 50px !important;
+}
+
+.btn-main-cat-v3:hover {
+    color: var(--color-primary) !important;
+}
+
+.btn-main-cat-v3.active {
+    background: #ffffff !important;
+    color: var(--color-primary) !important;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05) !important;
+    border-radius: 50px !important;
+}
+
+.professional-select-v3 {
+    border: 2px solid #e2e8f0 !important;
+    padding: 10px 40px 10px 20px !important;
+    font-weight: 600 !important;
+    color: #1e293b !important;
+    background-color: #fff !important;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23ff6b35'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E") !important;
+    background-repeat: no-repeat !important;
+    background-position: right 1rem center !important;
+    background-size: 1.2rem !important;
+    transition: all 0.3s ease !important;
+    appearance: none !important;
+}
+
+.professional-select-v3:focus {
+    border-color: #ff6b35 !important;
+    box-shadow: 0 0 0 4px rgba(255, 107, 53, 0.1) !important;
+}
+
+.grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2.5rem;
+}
+
+@media (max-width: 1400px) {
+    .grid-4 { grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+}
+
+@media (max-width: 991px) {
+    .grid-4 { grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+    .machinery-horizontal-filter { padding: 1.5rem !important; }
+}
+
+@media (max-width: 576px) {
+    .grid-4 { grid-template-columns: 1fr; }
+    .main-category-tabs-v3 {
+        width: 100% !important;
+        justify-content: space-between;
+    }
+    .btn-main-cat-v3 { flex: 1; padding: 10px 10px !important; font-size: 0.85rem !important; }
+    .professional-select-v3 { width: 100% !important; min-width: 0 !important; }
+}
