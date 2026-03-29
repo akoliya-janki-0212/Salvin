@@ -73,7 +73,7 @@ window.SALVIN_COMPONENTS = {
 </footer>
 
 <!-- WhatsApp Floating Button -->
-<a href="https://wa.me/919023979663" target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
+<a href="https://wa.me/919023979663?text=Hello%20Salvin%20Industries,%20I%20am%20interested%20in%20your%20services%20and%20would%20like%20to%20discuss%20further." target="_blank" class="whatsapp-float" aria-label="Chat on WhatsApp">
     <i class="fa-brands fa-whatsapp"></i>
 </a>
 `,
@@ -95,7 +95,7 @@ window.SALVIN_COMPONENTS = {
                 </div>
             </div>
 
-            <a href="https://wa.me/919023979663" target="_blank" class="btn bph-chat-btn">
+            <a href="https://wa.me/919023979663?text=Hello%20Salvin%20Industries,%20I%20am%20interested%20in%20your%20services%20and%20would%20like%20to%20discuss%20further." target="_blank" class="btn bph-chat-btn">
                 <i class="fa-brands fa-whatsapp me-2"></i> CHAT WITH ME
             </a>
         </div>
