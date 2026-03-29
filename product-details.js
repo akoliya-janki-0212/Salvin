@@ -7,9 +7,10 @@ const SPARES_CONFIG = {
     apiKey: 'patzUZXi4xbEcJBtZ.b612407e01e31156ccba38758a352318eae8a69ad628fa26230186c4b30b36a7',
     baseId: 'appkw4hlOEoVJZ7cn',
     tableName: 'spares',
-    categoryTable: 'Category',
-    brandTable: 'Brand',
-    technicalTable: 'productTechnical',
+    categoryTable: 'spares_category',
+    brandTable: 'spares_brand',
+    technicalTable: 'spares_productTechnical',
+    reviewTable: 'spares_review',
     whatsappNumber: '919023979663'
 };
 
@@ -32,6 +33,96 @@ function getProductThumb(record) {
     }
     return fieldData;
 }
+
+// Review System Helpers
+async function fetchProductReviews(productId) {
+    const filterFormula = `{product_id} = "${productId}"`;
+    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.reviewTable}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
+            }
+        });
+        const data = await response.json();
+        return data.records.map(r => r.fields);
+    } catch (error) {
+        console.error("Reviews Data Error:", error);
+        return [];
+    }
+}
+
+async function submitProductReview(productId, rating) {
+    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.reviewTable}`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fields: {
+                    product_id: parseInt(productId),
+                    review: parseInt(rating)
+                }
+            })
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            console.error("Submission Error Response:", data);
+            throw new Error(data.error?.message || "Submission Failed");
+        }
+
+        if (data.id) {
+            alert("Thank you for your review!");
+            location.reload();
+        }
+    } catch (error) {
+        console.error("Submit Review Error:", error);
+        alert("Failed to submit review. Please try again later.");
+    }
+}
+
+function renderStars(rating, interactive = false, productId = '') {
+    let starsHtml = '<div class="star-rating">';
+    const displayRating = Math.round(rating);
+
+    for (let i = 1; i <= 5; i++) {
+        const type = i <= displayRating ? 'fa-solid' : 'fa-regular';
+        const colorClass = i <= displayRating ? 'star-filled' : 'star-empty';
+        const action = interactive ? `onclick="window.submitProductReview('${productId}', ${i})"` : '';
+        const mouseOver = interactive ? `onmouseover="window.previewStars(${i}, this.parentElement)"` : '';
+        const mouseOut = interactive ? `onmouseout="window.previewStars(0, this.parentElement)"` : '';
+        const cursor = interactive ? 'style="cursor: pointer;"' : '';
+
+        starsHtml += `<i class="${type} fa-star ${colorClass} ${interactive ? 'interactive-star' : ''}" ${action} ${mouseOver} ${mouseOut} ${cursor}></i>`;
+    }
+    starsHtml += '</div>';
+    return starsHtml;
+}
+
+// Hover Preview Helper
+window.previewStars = function (rating, container) {
+    const stars = container.querySelectorAll('.interactive-star');
+    stars.forEach((star, index) => {
+        const i = index + 1;
+        if (i <= rating) {
+            star.classList.remove('fa-regular', 'star-empty');
+            star.classList.add('fa-solid', 'star-filled');
+        } else {
+            star.classList.remove('fa-solid', 'star-filled');
+            star.classList.add('fa-regular', 'star-empty');
+        }
+    });
+};
+
+// Global expose for onclick
+window.submitProductReview = submitProductReview;
 
 async function fetchProductDetails(recordId) {
     const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}/${recordId}`;
@@ -147,12 +238,34 @@ async function renderProductDetails(product) {
     const rawCategoryId = product.Category_id || product.category_id || product['Category_id'] || '';
     const rawBrandId = product.brand || product.Brand || product.brand_id || '';
 
-    const [technicalSpecs, similarProducts, resolvedCategory, resolvedBrand] = await Promise.all([
+    // Optimized Fetching: Parallelize remaining data
+    const [technicalSpecs, similarProducts, reviews] = await Promise.all([
         fetchProductTechnical(rawId),
         fetchSimilarProducts(rawCategoryId, product.id),
-        fetchLookupName(SPARES_CONFIG.categoryTable, rawCategoryId),
-        fetchLookupName(SPARES_CONFIG.brandTable, rawBrandId)
+        fetchProductReviews(rawId)
     ]);
+
+    // Use Lookup Fields if they exist in primary record, else fallback to IDs
+    const resolvedCategory = product.category_name || product.Category_name || product['Category_name'] || rawCategoryId || 'N/A';
+    const resolvedBrand = product.brand_name || product.Brand_name || product['Brand_name'] || rawBrandId || 'N/A';
+
+    // Calculate Average Rating
+    const ratings = reviews.map(r => r.review).filter(r => r !== undefined);
+    const avgRating = ratings.length > 0 ? ratings.reduce((a, b) => a + b, 0) / ratings.length : 0;
+    const ratingHtml = renderStars(avgRating);
+
+    // Consolidate Category and Brand into specs if they exist
+    const allSpecs = [];
+    if (resolvedCategory && resolvedCategory !== 'N/A') allSpecs.push({ Name: 'Category', Value: resolvedCategory });
+    if (resolvedBrand && resolvedBrand !== 'N/A') allSpecs.push({ Name: 'Brand', Value: resolvedBrand });
+
+    // Add technical specs from the technicalTable
+    technicalSpecs.forEach(spec => {
+        allSpecs.push({
+            Name: spec.Name || spec.Title || 'Parameter',
+            Value: spec.Value || spec.value || '-'
+        });
+    });
 
     if (breadcrumbName) breadcrumbName.textContent = name;
     document.title = `${name} | Salvin Industries`;
@@ -175,50 +288,80 @@ async function renderProductDetails(product) {
             
             <!-- Right Side: Essential Product Info -->
             <div class="details-content-condensed">
-                <div class="mb-4">
+                <div class="mb-1">
                     <span class="badge-mini">SKU: ${idString}</span>
                 </div>
-                <h1 class="product-h1 mb-4">${name}</h1>
+                <h1 class="product-h1 mb-1">${name}</h1>
+                <div class="mb-3">
+                    ${ratingHtml}
+                </div>
                 
-                <div class="attributes-grid mb-4">
-                    <div class="attr-row"><span>Category</span><strong>${resolvedCategory}</strong></div>
-                    <div class="attr-row"><span>Brand</span><strong>${resolvedBrand}</strong></div>
+                <!-- Combined Specifications Table -->
+                <div class="technical-section mb-4">
+                    <h5 class="section-subtitle-compact mb-2">Product Details:</h5>
+                    <table class="specs-table-premium">
+                        <tbody>
+                            ${allSpecs.map(spec => `
+                                <tr>
+                                    <td class="spec-label">${spec.Name}</td>
+                                    <td class="spec-value">${spec.Value}</td>
+                                </tr>
+                            `).join('')}
+                        </tbody>
+                    </table>
                 </div>
 
-                <div class="action-buttons mb-5">
-                    <button class="btn btn-primary-whatsapp w-100 mb-3" onclick="orderOnWhatsApp('${idString}', '${name}')">
+                <div class="action-buttons mb-4">
+                    <button class="btn btn-primary-whatsapp w-100 mb-2" onclick="orderOnWhatsApp('${idString}', '${name}')">
                         <i class="fa-brands fa-whatsapp me-2"></i> GET A QUOTE
                     </button>
                     <button class="btn btn-outline-share w-100" onclick="shareProduct('${name}')">
                         <i class="fa-solid fa-share-nodes me-2"></i> Share Product
                     </button>
                 </div>
-
-                <!-- Part 1: Technical Specifications (From productTechnical table) -->
-                ${technicalSpecs.length > 0 ? `
-                    <div class="technical-section mb-5">
-                        <h4 class="section-subtitle">Technical Specifications</h4>
-                        <table class="specs-table">
-                            <tbody>
-                                ${technicalSpecs.map(spec => `
-                                    <tr>
-                                        <td class="spec-label">${spec.Name || spec.Title || 'Parameter'}</td>
-                                        <td class="spec-value">${spec.Value || spec.value || '-'}</td>
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                ` : ''}
             </div>
         </div>
 
-        <!-- Description Section -->
-        <div class="description-section mt-5 pb-5 border-bottom">
-            <h4 class="section-subtitle">Product Description</h4>
-            <p class="text-muted" style="line-height: 1.8; font-size: 1.05rem;">
-                ${description.replace(/\n/g, '<br>')}
-            </p>
+        <!-- Dynamic Accordion Section -->
+        <div class="details-accordion">
+            <!-- Item 1: Details & Overview (Product Description) -->
+            <div class="accordion-item active">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Details & Overview</h3>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p>${description.replace(/\n/g, '<br>')}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Item 2: Terms & Conditions (Static) -->
+            <div class="accordion-item">
+                <button class="accordion-header" onclick="toggleAccordion(this)">
+                    <h3 class="accordion-title">Terms & Conditions</h3>
+                    <i class="fa-solid fa-chevron-down accordion-icon"></i>
+                </button>
+                <div class="accordion-content">
+                    <div class="accordion-inner">
+                        <p><strong>Returns & Refunds:</strong> No returns or refunds on electrical spare parts once they have been installed or used. Mechanical parts can be returned within 7 days if they are in original, unopened packaging.</p>
+                        <p><strong>Warranty:</strong> 6-month limited warranty on manufacturing defects for selected mechanical spares. Warranty does not cover normal wear and tear or improper installation.</p>
+                        <p><strong>Shipping:</strong> Standard shipping takes 3-5 business days. Express shipping options are available at checkout. All items are inspected for quality before dispatch.</p>
+                        <p><strong>Authenticity:</strong> We guarantee 100% genuine and original products sourced directly from manufacturers or authorized distributors.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Product Review Section (Standalone) -->
+        <div class="product-review-section mt-5">
+            <div class="review-box text-center py-4">
+                <h5 class="mb-3">Rate this product:</h5>
+                ${renderStars(0, true, rawId)}
+                <p class="mt-2 text-muted small">Click a star to submit your review</p>
+            </div>
         </div>
 
         <!-- Part 2: Similar Products (From spares table) -->
@@ -263,6 +406,21 @@ async function renderProductDetails(product) {
         </div>
     `;
 }
+
+window.toggleAccordion = function (button) {
+    const item = button.parentElement;
+    const isActive = item.classList.contains('active');
+
+    // Close all other accordion items (standard behavior)
+    document.querySelectorAll('.accordion-item').forEach(el => {
+        el.classList.remove('active');
+    });
+
+    // Toggle current item
+    if (!isActive) {
+        item.classList.add('active');
+    }
+};
 
 function orderOnWhatsApp(id, name) {
     const message = encodeURIComponent(`Hi Salvin Industries, I am interested in ordering: \n\nProduct: ${name}\nID: ${id}\n\nPlease provide more details.`);
@@ -318,8 +476,14 @@ function shareProduct(name) {
     }
 }
 
+// Global Initialization Guard
+let isDetailsInitialized = false;
+
 // Initialization and URL Parsing
 document.addEventListener('DOMContentLoaded', async () => {
+    if (isDetailsInitialized) return;
+    isDetailsInitialized = true;
+
     const urlParams = new URLSearchParams(window.location.search);
     const recordId = urlParams.get('id');
 

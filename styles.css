@@ -265,6 +265,74 @@ img {
   margin-top: 0.5rem;
 }
 
+/* --- Product Detail Accordions --- */
+.details-accordion {
+    margin-top: 3rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.accordion-item {
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.accordion-header {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem 0.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.3s ease;
+}
+
+.accordion-item.active .accordion-header {
+    padding-bottom: 1rem;
+}
+
+.accordion-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--color-dark);
+    margin: 0;
+}
+
+.accordion-icon {
+    font-size: 1.1rem;
+    color: var(--color-primary);
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.accordion-item.active .accordion-icon {
+    transform: rotate(180deg);
+}
+
+.accordion-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: all 0.4s ease-out;
+    opacity: 0;
+}
+
+.accordion-item.active .accordion-content {
+    max-height: 2000px;
+    opacity: 1;
+    padding: 0 0.5rem 2rem 0.5rem;
+    transition: all 0.4s ease-in;
+}
+
+.accordion-inner {
+    font-size: 1rem;
+    line-height: 1.7;
+    color: #4a5568;
+}
+
+.accordion-item .accordion-inner p {
+    margin-bottom: 1rem;
+}
+
 .mt-3 {
   margin-top: 1rem;
 }
@@ -1735,6 +1803,22 @@ textarea:focus {
     bottom: auto;
     margin: -10px 0 0 0;
     max-width: 90%;
+  }
+
+  /* Star Rating System */
+  .star-rating {
+    display: inline-flex;
+    gap: 5px;
+    font-size: 1.2rem;
+    margin: 5px 0;
+  }
+
+  .star-filled {
+    color: #ffd700;
+  }
+
+  .star-empty {
+    color: #cbd5e1;
   }
 
   .hero-img {
@@ -4155,10 +4239,10 @@ textarea:focus {
 /* --- Condensed Product Details UI --- */
 .details-grid-condensed {
   display: grid;
-  grid-template-columns: 0.8fr 1.2fr; /* Swapped ratios to make image side smaller */
-  gap: 3.5rem;
+  grid-template-columns: 0.7fr 1.3fr; /* Slightly smaller gallery side */
+  gap: 2.5rem; /* Reduced from 3.5rem */
   align-items: start;
-  margin-top: 2rem;
+  margin-top: 1.5rem;
 }
 
 .product-h1 {
@@ -4306,6 +4390,50 @@ textarea:focus {
   background: white;
 }
 
+.section-subtitle-compact {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #64748b;
+  margin-bottom: 0.75rem;
+}
+
+.specs-table-premium {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-bottom: 1.5rem;
+}
+
+.specs-table-premium tr:nth-child(even) {
+  background-color: #f8fafc;
+}
+
+.specs-table-premium tr:hover {
+  background-color: #f1f5f9;
+}
+
+.specs-table-premium td {
+  padding: 0.6rem 1rem;
+  font-size: 0.9rem;
+  border-bottom: 1px solid #f1f5f9;
+}
+
+.specs-table-premium .spec-label {
+  color: #64748b;
+  width: 40%;
+  font-weight: 600;
+  background: transparent;
+  border-left: none !important;
+}
+
+.specs-table-premium .spec-value {
+  color: var(--color-dark);
+  font-weight: 700;
+  background: transparent;
+}
+
 /* Similar Products */
 .similar-grid {
   display: grid;
@@ -4388,4 +4516,30 @@ textarea:focus {
   text-decoration: line-through;
   color: #767676;
   margin-top: 0.5rem;
+}
+
+/* Star Rating System */
+.star-rating {
+    display: inline-flex !important;
+    gap: 5px !important;
+    font-size: 1.25rem !important;
+    margin: 5px 0 !important;
+}
+
+.star-rating i.star-filled {
+    color: #FFD700 !important;
+}
+
+.star-rating i.star-empty {
+    color: #D1D5DB !important;
+}
+
+.interactive-star {
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+.interactive-star:hover {
+    transform: scale(1.1) !important;
+    color: #FBBF24 !important;
 }

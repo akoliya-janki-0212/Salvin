@@ -113,8 +113,8 @@ document.addEventListener('DOMContentLoaded', async () => {
             const activePopup = document.getElementById('bada-style-popup');
             if (activePopup) {
                 console.log("Showing popup now.");
-                // activePopup.style.display = 'flex';
-                // sessionStorage.setItem(storageKey, 'true'); // Uncomment to record the view
+                activePopup.style.display = 'flex';
+                sessionStorage.setItem(storageKey, 'true'); // Uncomment to record the view
             } else {
                 console.error("Popup overlay element #bada-style-popup not found in DOM!");
             }

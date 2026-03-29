@@ -7,8 +7,8 @@ const SPARES_CONFIG = {
     apiKey: 'patzUZXi4xbEcJBtZ.b612407e01e31156ccba38758a352318eae8a69ad628fa26230186c4b30b36a7',
     baseId: 'appkw4hlOEoVJZ7cn',
     tableName: 'spares',
-    categoryTable: 'Category',
-    brandTable: 'Brand',
+    categoryTable: 'spares_category',
+    brandTable: 'spares_brand',
     whatsappNumber: '919023979663'
 };
 
