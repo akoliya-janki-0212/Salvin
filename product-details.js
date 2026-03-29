@@ -11,6 +11,7 @@ const SPARES_CONFIG = {
     brandTable: 'spares_brand',
     technicalTable: 'spares_productTechnical',
     reviewTable: 'spares_review',
+    termsTable: 'spares_terms_condtion',
     whatsappNumber: '919023979663'
 };
 
@@ -32,6 +33,24 @@ function getProductThumb(record) {
         return fieldData[0].url;
     }
     return fieldData;
+}
+
+// Terms & Conditions Helper
+async function fetchProductTerms() {
+    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.termsTable}`;
+
+    try {
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
+            }
+        });
+        const data = await response.json();
+        return data.records.map(r => r.fields);
+    } catch (error) {
+        console.error("Terms Data Error:", error);
+        return [];
+    }
 }
 
 // Review System Helpers
@@ -239,10 +258,11 @@ async function renderProductDetails(product) {
     const rawBrandId = product.brand || product.Brand || product.brand_id || '';
 
     // Optimized Fetching: Parallelize remaining data
-    const [technicalSpecs, similarProducts, reviews] = await Promise.all([
+    const [technicalSpecs, similarProducts, reviews, terms] = await Promise.all([
         fetchProductTechnical(rawId),
         fetchSimilarProducts(rawCategoryId, product.id),
-        fetchProductReviews(rawId)
+        fetchProductReviews(rawId),
+        fetchProductTerms()
     ]);
 
     // Use Lookup Fields if they exist in primary record, else fallback to IDs
@@ -345,14 +365,23 @@ async function renderProductDetails(product) {
                 </button>
                 <div class="accordion-content">
                     <div class="accordion-inner">
-                        <p><strong>Returns & Refunds:</strong> No returns or refunds on electrical spare parts once they have been installed or used. Mechanical parts can be returned within 7 days if they are in original, unopened packaging.</p>
-                        <p><strong>Warranty:</strong> 6-month limited warranty on manufacturing defects for selected mechanical spares. Warranty does not cover normal wear and tear or improper installation.</p>
-                        <p><strong>Shipping:</strong> Standard shipping takes 3-5 business days. Express shipping options are available at checkout. All items are inspected for quality before dispatch.</p>
-                        <p><strong>Authenticity:</strong> We guarantee 100% genuine and original products sourced directly from manufacturers or authorized distributors.</p>
+                        ${terms.length > 0 ? `
+                            <div class="dynamic-terms-container">
+                                ${terms.sort((a, b) => (a.id || 0) - (b.id || 0)).map(t => `
+                                    <div class="term-entry">
+                                        <div class="term-icon-wrapper">
+                                            <i class="fa-solid fa-check"></i>
+                                        </div>
+                                        <div class="term-text">
+                                            ${t.description || t.Description || ''}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        ` : '<p>Please refer to our standard terms and conditions for details.</p>'}
                     </div>
                 </div>
             </div>
-
         </div>
 
         <!-- Product Review Section (Standalone) -->
