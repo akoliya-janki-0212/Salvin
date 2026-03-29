@@ -257,17 +257,15 @@ async function renderProductDetails(product) {
     const rawCategoryId = product.Category_id || product.category_id || product['Category_id'] || '';
     const rawBrandId = product.brand || product.Brand || product.brand_id || '';
 
-    // Optimized Fetching: Parallelize remaining data
-    const [technicalSpecs, similarProducts, reviews, terms] = await Promise.all([
+    // Parallel Fetching: Get all related data in one go
+    const [technicalSpecs, similarProducts, resolvedCategory, resolvedBrand, reviews, terms] = await Promise.all([
         fetchProductTechnical(rawId),
         fetchSimilarProducts(rawCategoryId, product.id),
+        fetchLookupName(SPARES_CONFIG.categoryTable, rawCategoryId),
+        fetchLookupName(SPARES_CONFIG.brandTable, rawBrandId),
         fetchProductReviews(rawId),
         fetchProductTerms()
     ]);
-
-    // Use Lookup Fields if they exist in primary record, else fallback to IDs
-    const resolvedCategory = product.category_name || product.Category_name || product['Category_name'] || rawCategoryId || 'N/A';
-    const resolvedBrand = product.brand_name || product.Brand_name || product['Brand_name'] || rawBrandId || 'N/A';
 
     // Calculate Average Rating
     const ratings = reviews.map(r => r.review).filter(r => r !== undefined);
