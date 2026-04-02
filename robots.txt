@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://salvinindustries.com/sitemap.xml
+Sitemap: https://salvinindustries.in/sitemap.xml
