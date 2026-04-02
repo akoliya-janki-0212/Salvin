@@ -127,6 +127,16 @@ function renderSubCategoryOptions(categories) {
 /**
  * Render Machinery Cards to Grid
  */
+function slugify(text) {
+    if (!text) return 'unnamed_machine';
+    return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '_')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '_')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+}
+
 function renderMachineries(machines) {
     const grid = document.getElementById('dynamic-machine-grid');
     const resultsCountDisplay = document.getElementById('machine-results-count');
@@ -134,7 +144,6 @@ function renderMachineries(machines) {
 
     if (loader) loader.style.display = 'none';
     
-    // Update Results Count (Pill Design)
     if (resultsCountDisplay) {
         resultsCountDisplay.textContent = `${machines.length} Products`;
     }
@@ -156,8 +165,8 @@ function renderMachineries(machines) {
     grid.innerHTML = machines.map(machine => {
         const imgUrl = getProductImage(machine);
         const name = machine.product_name || machine.Name || machine.name || machine.Title || 'Unnamed Machine';
-        const id = machine.id; // Record ID
         const displayId = machine.product_id || machine.id;
+        const slug = slugify(name);
 
         return `
             <div class="product-card">
@@ -171,7 +180,7 @@ function renderMachineries(machines) {
                             <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
                         </div>
                         <div class="product-divider"></div>
-                        <div class="product-action" onclick="window.location.href='machine-details.html?id=${id}'">
+                        <div class="product-action" onclick="window.location.href='${slug}.html'">
                             <span>View More</span>
                         </div>
                     </div>

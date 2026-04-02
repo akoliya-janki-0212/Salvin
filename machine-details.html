@@ -4,8 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Machine Details | Salvin Industries</title>
-    <meta name="description" content="View detailed technical specifications, descriptions, and categories for industrial machineries from Salvin Industries.">
+    <title>{{TITLE}} | Salvin Industries</title>
+    <meta name="description" content="{{DESCRIPTION}}">
+    <link rel="canonical" href="https://salvinindustries.in/{{SLUG}}.html">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="{{TITLE}}">
+    <meta property="og:description" content="{{DESCRIPTION}}">
+    <meta property="og:image" content="{{IMAGE_URL}}">
+    <meta property="og:url" content="https://salvinindustries.in/{{SLUG}}.html">
+    <meta name="twitter:card" content="summary_large_image">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -26,21 +35,12 @@
             <!-- Dynamic Breadcrumbs -->
             <nav aria-label="breadcrumb" class="mb-4">
                 <ol class="breadcrumb" id="machine-breadcrumb">
-                    <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-                    <li class="breadcrumb-item"><i class="fa-solid fa-chevron-right mx-2 opacity-50 small"></i></li>
-                    <li class="breadcrumb-item"><a href="machineries.html">Machineries</a></li>
-                    <!-- Category and Machine Name will be injected here -->
+                    <!-- BREADCRUMB_INJECTION -->
                 </ol>
             </nav>
 
             <div id="machine-details-container">
-                <!-- Data will be injected here -->
-                <div class="text-center p-5">
-                    <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-                        <span class="visually-hidden">Loading...</span>
-                    </div>
-                    <p class="mt-3 text-muted fw-bold">Fetching Machine Specifications...</p>
-                </div>
+                <!-- DATA_INJECTION -->
             </div>
         </div>
     </main>
