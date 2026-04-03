@@ -14,6 +14,8 @@ const MACHINE_CONFIG = {
 // Global State
 let currentMainCategoryId = 1; // Default to Processing (as per previous request, but mapping 2 to Processing)
 let currentSubCategoryId = 'All';
+let currentPage = 1;
+const ITEMS_PER_PAGE = 50;
 
 const MAIN_CAT_MAP = {
     1: 'Processing Machineries',
@@ -36,76 +38,41 @@ function getProductImage(record) {
  * Fetch Sub-Categories for a specific Main Category ID
  */
 async function fetchSubCategories(mainCatId) {
-    // Filter specifically matching the main category ID provided (1 or 2)
-    const filterFormula = `{main_category} = ${mainCatId}`;
-    const url = `https://api.airtable.com/v0/${MACHINE_CONFIG.baseId}/${MACHINE_CONFIG.categoryTable}?filterByFormula=${encodeURIComponent(filterFormula)}`;
+    if (!window.MACHINE_CATEGORY_DATA) return [];
 
-    try {
-        const response = await fetch(url, {
-            headers: { Authorization: `Bearer ${MACHINE_CONFIG.apiKey}` }
-        });
-        const data = await response.json();
-
-        if (data.error) {
-            console.error("Airtable API Error (Categories):", data.error);
-            return [];
-        }
-
-        if (!data.records) {
-            console.warn("No records field in response:", data);
-            return [];
-        }
-
-        return data.records.map(record => ({
-            id: record.fields.id || record.fields.ID || record.id,
-            name: record.fields.Name || record.fields.name || record.fields.naem || 'Unnamed'
-        })).sort((a, b) => String(a.name).localeCompare(String(b.name)));
-    } catch (error) {
-        console.error("Fetch Exception (Categories):", error);
-        return [];
-    }
+    return window.MACHINE_CATEGORY_DATA
+        .filter(c => c.fields && c.fields.main_category == mainCatId)
+        .map(c => ({
+            id: c.fields.id || c.id,
+            name: c.fields.Name || c.fields.name || c.fields.naem || 'Unnamed'
+        }))
+        .sort((a, b) => String(a.name).localeCompare(String(b.name)));
 }
 
 /**
  * Fetch Machineries with Filter IDs
  */
 async function fetchMachineries(mainCatId, subCategoryId) {
-    // Single field comparison for category ID
-    const mainFilter = `{category} = ${mainCatId}`;
-    const filters = [mainFilter];
+    if (!window.MACHINE_CATALOG_DATA) return [];
 
-    if (subCategoryId && subCategoryId !== 'All') {
-        const isNumeric = !isNaN(subCategoryId);
-        const subFilter = isNumeric
-            ? `{sub_category} = ${subCategoryId}`
-            : `{sub_category} = "${subCategoryId}"`;
-        filters.push(subFilter);
-    }
-
-    const filterFormula = filters.length > 1 ? `AND(${filters.join(',')})` : filters[0];
-    const url = `https://api.airtable.com/v0/${MACHINE_CONFIG.baseId}/${MACHINE_CONFIG.tableName}?filterByFormula=${encodeURIComponent(filterFormula)}&sort[0][field]=name&sort[0][direction]=asc`;
-
-    try {
-        const response = await fetch(url, {
-            headers: { Authorization: `Bearer ${MACHINE_CONFIG.apiKey}` }
-        });
-        const data = await response.json();
-
-        if (data.error) {
-            console.error("Airtable API Error (Machineries):", data.error);
-            return [];
+    let filtered = window.MACHINE_CATALOG_DATA.filter(m => {
+        if (!m.category || m.category != mainCatId) return false;
+        if (subCategoryId && subCategoryId !== 'All') {
+            const isNumeric = !isNaN(subCategoryId);
+            if (isNumeric) {
+                if (m.sub_category != subCategoryId) return false;
+            } else {
+                if (String(m.sub_category) !== String(subCategoryId)) return false;
+            }
         }
+        return true;
+    });
 
-        if (!data.records) {
-            console.warn("No records field for machineries:", data);
-            return [];
-        }
-
-        return data.records.map(record => ({ id: record.id, ...record.fields }));
-    } catch (error) {
-        console.error("Fetch Exception (Machineries):", error);
-        return [];
-    }
+    return filtered.sort((a, b) => {
+        const nameA = a.name || a.product_name || a.Name || '';
+        const nameB = b.name || b.product_name || b.Name || '';
+        return String(nameA).localeCompare(String(nameB));
+    });
 }
 
 /**
@@ -143,7 +110,7 @@ function renderMachineries(machines) {
     const loader = document.getElementById('machine-loader');
 
     if (loader) loader.style.display = 'none';
-    
+
     if (resultsCountDisplay) {
         resultsCountDisplay.textContent = `${machines.length} Products`;
     }
@@ -159,10 +126,14 @@ function renderMachineries(machines) {
                 </div>
             </div>
         `;
+        renderPagination(0);
         return;
     }
 
-    grid.innerHTML = machines.map(machine => {
+    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedMachines = machines.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+
+    grid.innerHTML = paginatedMachines.map(machine => {
         const imgUrl = getProductImage(machine);
         const name = machine.product_name || machine.Name || machine.name || machine.Title || 'Unnamed Machine';
         const displayId = machine.product_id || machine.id;
@@ -180,7 +151,7 @@ function renderMachineries(machines) {
                             <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
                         </div>
                         <div class="product-divider"></div>
-                        <div class="product-action" onclick="window.location.href='${slug}.html'">
+                        <div class="product-action" onclick="window.location.href='products/machine/${slug}_${displayId}.html'">
                             <span>View More</span>
                         </div>
                     </div>
@@ -188,7 +159,47 @@ function renderMachineries(machines) {
             </div>
         `;
     }).join('');
+
+    renderPagination(machines.length);
 }
+
+function renderPagination(totalItems) {
+    const container = document.getElementById('pagination-container');
+    if (!container) return;
+
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+
+    html += `<button class="btn btn-outline-primary rounded-pill px-3" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})"><i class="fa-solid fa-chevron-left me-1"></i> Prev</button>`;
+
+    for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7) {
+            if (i !== 1 && i !== totalPages && Math.abs(i - currentPage) > 1) {
+                if (i === 2 && currentPage > 3) html += `<span class="px-2">...</span>`;
+                if (i === totalPages - 1 && currentPage < totalPages - 2) html += `<span class="px-2">...</span>`;
+                continue;
+            }
+        }
+
+        const isActive = i === currentPage ? 'btn-primary' : 'btn-outline-primary';
+        html += `<button class="btn ${isActive} rounded-pill px-3 fw-bold" onclick="changePage(${i})">${i}</button>`;
+    }
+
+    html += `<button class="btn btn-outline-primary rounded-pill px-3" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">Next <i class="fa-solid fa-chevron-right ms-1"></i></button>`;
+
+    container.innerHTML = html;
+}
+
+window.changePage = function (page) {
+    currentPage = page;
+    updateMachineryList();
+    document.getElementById('machine-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
 /**
  * Switch Main Category (Horizontal Tab Click)
@@ -196,16 +207,17 @@ function renderMachineries(machines) {
 window.switchMainCategory = async function (mainCategoryLabel, element) {
     // Map label to ID: Processing = 1, Packaging = 2
     const newId = mainCategoryLabel.includes('Packaging') || mainCategoryLabel === 2 ? 2 : 1;
-    
+
     currentMainCategoryId = newId;
     currentSubCategoryId = 'All'; // Reset sub-category on main change
+    currentPage = 1; // Reset pagination
 
     // Update Tab UI
     if (element) {
         document.querySelectorAll('.btn-main-cat-v3').forEach(btn => btn.classList.remove('active'));
         element.classList.add('active');
     }
-    
+
     // Refresh Sub-categories and Product List
     await updateAll();
 };
@@ -215,6 +227,7 @@ window.switchMainCategory = async function (mainCategoryLabel, element) {
  */
 window.switchSubCategory = async function (subCategoryId) {
     currentSubCategoryId = subCategoryId;
+    currentPage = 1; // Reset pagination
     await updateMachineryList();
 };
 

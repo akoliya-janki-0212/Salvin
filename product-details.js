@@ -450,6 +450,89 @@ window.toggleAccordion = function (button) {
     }
 };
 
+window.previewStars = function (rating, container) {
+    const stars = container.querySelectorAll('.interactive-star');
+    stars.forEach((star, index) => {
+        const i = index + 1;
+        if (i <= rating) {
+            star.classList.remove('fa-regular');
+            star.classList.add('fa-solid');
+            star.style.color = '#ffc107';
+            star.style.opacity = '1';
+        } else {
+            star.classList.remove('fa-solid');
+            star.classList.add('fa-regular');
+            star.style.color = '#e2e8f0';
+            star.style.opacity = '0.5';
+        }
+    });
+};
+
+window.submitProductReview = async function(productId, rating) {
+    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.reviewTable}`;
+
+    try {
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                fields: {
+                    product_id: parseInt(productId) || 0,
+                    review: parseInt(rating)
+                }
+            })
+        });
+
+        if (response.ok) {
+            alert("Thank you for your rating!");
+            // Instead of reload, just update UI optionally, but reload is fine for static text refresh
+            location.reload();
+        } else {
+            console.error("Review Error");
+            alert("Thank you for your feedback!");
+        }
+    } catch (error) {
+        console.error("Submit Review Error:", error);
+        alert("Thank you for your feedback!");
+    }
+}
+
+window.toggleAccordion = function (btn) {
+    const parent = btn.closest('.accordion-item');
+    const content = btn.nextElementSibling;
+    const icon = btn.querySelector('i');
+    const isActive = parent.classList.contains('active');
+
+    if (!isActive) {
+        // Open
+        parent.classList.add('active');
+        btn.classList.add('active');
+        btn.style.background = '#e2e8f0';
+        if(icon) icon.classList.replace('fa-chevron-down', 'fa-chevron-up');
+        
+        content.style.display = 'block';
+        setTimeout(() => {
+            content.style.maxHeight = '1000px';
+            content.style.opacity = '1';
+        }, 10);
+    } else {
+        // Close
+        parent.classList.remove('active');
+        btn.classList.remove('active');
+        btn.style.background = '#f8fafc';
+        if(icon) icon.classList.replace('fa-chevron-up', 'fa-chevron-down');
+        
+        content.style.maxHeight = '0';
+        content.style.opacity = '0';
+        setTimeout(() => {
+            content.style.display = 'none';
+        }, 300);
+    }
+}
+
 function orderOnWhatsApp(id, name) {
     const message = encodeURIComponent(`Hi Salvin Industries, I am interested in ordering: \n\nProduct: ${name}\nID: ${id}\n\nPlease provide more details.`);
     window.open(`https://wa.me/919023979663?text=${message}`, '_blank');
@@ -511,6 +594,12 @@ let isDetailsInitialized = false;
 document.addEventListener('DOMContentLoaded', async () => {
     if (isDetailsInitialized) return;
     isDetailsInitialized = true;
+
+    if (window.isStaticPage && window.productData) {
+        console.log("Static Page Detected: Using pre-injected SPARE data.");
+        // We can skip fetching because the build script baked everything in.
+        return;
+    }
 
     const urlParams = new URLSearchParams(window.location.search);
     const recordId = urlParams.get('id');

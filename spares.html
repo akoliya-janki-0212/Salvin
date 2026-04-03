@@ -51,16 +51,57 @@
                 <main class="product-main">
                     <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
                         <h2 id="current-category-name" style="margin-bottom: 0;">Pneumatic Materials</h2>
-                        <span id="product-count" class="badge-count">Loading...</span>
+                        <span id="product-count" class="badge-count">2 Products</span>
                     </div>
 
+                    <!-- SEO Fallback Links injected by build_machineries.js -->
+                    <div id="seo-links-container" style="display: none;">
+<a href="https://salvinindustries.in/products/spare/pu_pipe_2.html">pu pipe 2</a>
+<a href="https://salvinindustries.in/products/spare/pu_pipe_1.html">pu pipe 1</a>
+</div>
+
                     <div id="product-grid" class="product-grid">
-                        <!-- Products will be rendered here -->
-                        <div class="text-center w-100 p-5" id="loader">
-                            <i class="fa-solid fa-circle-notch fa-spin fa-3x text-primary"></i>
-                            <p class="mt-3">Fetching products...</p>
+
+            <div class="product-card">
+                <div class="product-img-container">
+                    <img src="https://v5.airtableusercontent.com/v3/u/51/51/1775246400000/R1ZiUWH1VSzbXku8yFZDVA/irYVOz-eB8xZJul5N1GZIMOiUpCu_YE9fWCJs3KGVWiKfLXY9LF1AQO-r9YIRVlAvv3CrlwR8DxsBCAfs_vqMJ22Ztyly082AnKTUhTDjcrmK3JVYMlMQ990Zb9Dl_297xdWXuVMGTrVhWgkiE52srrYYXvTGvKtVEQS8BPN1IU/xY0Dy7cB4r93XnIoUFRCPB3cf-tsoecmZIKJXdR1zI8" alt="PU pipe" class="product-img">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">PU pipe</h3>
+                    <div class="product-footer">
+                        <div class="product-price-column" style="cursor: pointer;" onclick="event.stopPropagation(); orderOnWhatsApp('1', 'PU pipe')">
+                            <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
+                        </div>
+                        <div class="product-divider"></div>
+                        <div class="product-action" onclick="window.location.href='products/spare/pu_pipe_1.html'">
+                            <span>View More</span>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div class="product-card">
+                <div class="product-img-container">
+                    <img src="https://v5.airtableusercontent.com/v3/u/51/51/1775246400000/oxAdvJPkICB88ZNt0HeJ8Q/Dc8EwUZXqIMlWPPTLWei9B7WefzcaRwZSjlxd_rPnNeaKV4yGyWypB-NRfvADjxLd9d90JrOAzOVvwPCuCVP2DQ-D88ksRv71R5yZQHOx-Pe-d57BdW0H-Cx6IsQwkC3ajzRoDPNJ2ZW_AwHb0MCRBUIGWvIJSB12sOkpkae7b2CvchX7zU7Qk69Y-_Kvc06zMJPaE-Q-A4kmDdGz8Et-Q/uX4nIWyYRLweb2puRpwZvtEW3a9-tbo5d36P1gawlOs" alt="PU pipe" class="product-img">
+                </div>
+                <div class="product-content">
+                    <h3 class="product-title">PU pipe</h3>
+                    <div class="product-footer">
+                        <div class="product-price-column" style="cursor: pointer;" onclick="event.stopPropagation(); orderOnWhatsApp('2', 'PU pipe')">
+                            <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
+                        </div>
+                        <div class="product-divider"></div>
+                        <div class="product-action" onclick="window.location.href='products/spare/pu_pipe_2.html'">
+                            <span>View More</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+</div>
+
+                    <!-- Pagination UI -->
+                    <div id="pagination-container" class="d-flex justify-content-center mt-5 pb-5 gap-2 flex-wrap">
+
+</div>
                 </main>
             </div>
         </div>
@@ -69,6 +110,7 @@
     <div id="footer-root"></div>
     <div id="popup-root"></div>
 
+    <script src="catalog_data.js"></script>
     <script src="components.js"></script>
     <script src="main.js"></script>
     <script src="spares.js"></script>

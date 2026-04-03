@@ -15,6 +15,8 @@ const SPARES_CONFIG = {
 // Global Filter State
 let currentCategoryId = 'All';
 let currentBrandId = 'All';
+let currentPage = 1;
+const ITEMS_PER_PAGE = 50;
 
 // Helper to get image URL from Airtable (String or Attachment Array)
 function getProductImage(record) {
@@ -26,60 +28,48 @@ function getProductImage(record) {
     return fieldData; // String URL format
 }
 
+function slugify(text) {
+    if (!text) return 'unnamed_product';
+    return text.toString().toLowerCase().trim()
+        .replace(/\s+/g, '_')
+        .replace(/[^\w-]+/g, '')
+        .replace(/--+/g, '_')
+        .replace(/^-+/, '')
+        .replace(/-+$/, '');
+}
+
 async function fetchProducts(catId, brandId) {
-    const filters = [];
-    if (catId && catId !== 'All') filters.push(`{category_id} = "${catId}"`);
-    if (brandId && brandId !== 'All') filters.push(`{brand} = "${brandId}"`);
+    if (!window.SPARE_CATALOG_DATA) return [];
 
-    const filterFormula = filters.length > 1 ? `AND(${filters.join(',')})` : (filters[0] || '');
-    console.log("Generated Filter Formula:", filterFormula); // DEBUG LOG
+    let filtered = window.SPARE_CATALOG_DATA.filter(p => {
+        if (catId && catId !== 'All' && String(p.category_id) !== String(catId)) return false;
+        if (brandId && brandId !== 'All' && String(p.brand) !== String(brandId)) return false;
+        return true;
+    });
 
-    let url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${SPARES_CONFIG.tableName}?maxRecords=100&sort[0][field]=product_id&sort[0][direction]=asc`;
-
-    if (filterFormula) {
-        url += `&filterByFormula=${encodeURIComponent(filterFormula)}`;
-    }
-
-    try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
-            }
-        });
-        const data = await response.json();
-        console.log("Airtable Response (Products):", data);
-        return data.records.map(record => ({ id: record.id, ...record.fields }));
-    } catch (error) {
-        console.error("Airtable Fetch Error:", error);
-        return [];
-    }
+    return filtered.sort((a, b) => {
+        const idA = a.product_id || a.id || a.ID || '';
+        const idB = b.product_id || b.id || b.ID || '';
+        return String(idA).localeCompare(String(idB), undefined, { numeric: true, sensitivity: 'base' });
+    });
 }
 
 async function fetchFilterOptions(tableName) {
-    const url = `https://api.airtable.com/v0/${SPARES_CONFIG.baseId}/${tableName}?maxRecords=100`;
+    let rawData = [];
+    if (tableName === SPARES_CONFIG.categoryTable) rawData = window.SPARE_CATEGORY_DATA || [];
+    else if (tableName === SPARES_CONFIG.brandTable) rawData = window.SPARE_BRAND_DATA || [];
 
-    try {
-        const response = await fetch(url, {
-            headers: {
-                Authorization: `Bearer ${SPARES_CONFIG.apiKey}`
-            }
-        });
-        const data = await response.json();
-        return data.records.map(record => {
-            // Priority for custom ID fields: id, ID, Id, or any field with 'id' in its name
-            const customId = record.fields.id || record.fields.ID || record.fields.Id || record.fields['Product ID'] || record.fields['id'];
-            return {
-                id: customId || record.id, // Fallback to record.id only if truly missing
-                name: record.fields.naem || record.fields.Name || record.fields.name || 'Unnamed'
-            };
-        }).sort((a, b) => {
-            // Robust alphanumeric sort (handles 1, 2, 10 correctly)
-            return String(a.id).localeCompare(String(b.id), undefined, { numeric: true, sensitivity: 'base' });
-        });
-    } catch (error) {
-        console.error(`Fetch Error (${tableName}):`, error);
-        return [];
-    }
+    return rawData.map(record => {
+        // Priority for custom ID fields: id, ID, Id, or any field with 'id' in its name
+        const customId = record.fields.id || record.fields.ID || record.fields.Id || record.fields['Product ID'] || record.fields['id'];
+        return {
+            id: customId || record.id, // Fallback to record.id only if truly missing
+            name: record.fields.naem || record.fields.Name || record.fields.name || 'Unnamed'
+        };
+    }).sort((a, b) => {
+        // Robust alphanumeric sort (handles 1, 2, 10 correctly)
+        return String(a.id).localeCompare(String(b.id), undefined, { numeric: true, sensitivity: 'base' });
+    });
 }
 
 function renderProducts(products) {
@@ -94,16 +84,19 @@ function renderProducts(products) {
             </div>
         `;
         countDisplay.textContent = '0 Products';
+        renderPagination(0);
         return;
     }
 
     countDisplay.textContent = `${products.length} Products`;
-    grid.innerHTML = products.map(product => {
+
+    const startIdx = (currentPage - 1) * ITEMS_PER_PAGE;
+    const paginatedProducts = products.slice(startIdx, startIdx + ITEMS_PER_PAGE);
+
+    grid.innerHTML = paginatedProducts.map(product => {
         const imgUrl = getProductImage(product);
         const name = product.product_name || product.Name || product.name || product.Title || 'Unnamed Product';
         const id = product.product_id || product.id || product.ID || product['Product ID'] || 'N/A';
-        const price = product.price || product.Price || product.RegularPrice || 0;
-        const sellingPrice = product.selling_price || product['selling price'] || product.SellingPrice || product.SalePrice || price;
 
         return `
             <div class="product-card">
@@ -118,7 +111,7 @@ function renderProducts(products) {
                             <span class="price-main" style="color: var(--color-accent); font-size: 0.95rem; text-transform: uppercase;">Get a Quote</span>
                         </div>
                         <div class="product-divider"></div>
-                        <div class="product-action" onclick="window.location.href='product-details.html?id=${product.id}'">
+                        <div class="product-action" onclick="window.location.href='products/spare/${slugify(name)}_${id}.html'">
                             <span>View More</span>
                         </div>
                     </div>
@@ -126,7 +119,45 @@ function renderProducts(products) {
             </div>
         `;
     }).join('');
+
+    renderPagination(products.length);
 }
+
+function renderPagination(totalItems) {
+    const container = document.getElementById('pagination-container');
+    if (!container) return;
+
+    const totalPages = Math.ceil(totalItems / ITEMS_PER_PAGE);
+    if (totalPages <= 1) {
+        container.innerHTML = '';
+        return;
+    }
+
+    let html = '';
+    html += `<button class="btn btn-outline-primary rounded-pill px-3" ${currentPage === 1 ? 'disabled' : ''} onclick="changePage(${currentPage - 1})"><i class="fa-solid fa-chevron-left me-1"></i> Prev</button>`;
+
+    for (let i = 1; i <= totalPages; i++) {
+        if (totalPages > 7) {
+            if (i !== 1 && i !== totalPages && Math.abs(i - currentPage) > 1) {
+                if (i === 2 && currentPage > 3) html += `<span class="px-2">...</span>`;
+                if (i === totalPages - 1 && currentPage < totalPages - 2) html += `<span class="px-2">...</span>`;
+                continue;
+            }
+        }
+        const isActive = i === currentPage ? 'btn-primary' : 'btn-outline-primary';
+        html += `<button class="btn ${isActive} rounded-pill px-3 fw-bold" onclick="changePage(${i})">${i}</button>`;
+    }
+
+    html += `<button class="btn btn-outline-primary rounded-pill px-3" ${currentPage === totalPages ? 'disabled' : ''} onclick="changePage(${currentPage + 1})">Next <i class="fa-solid fa-chevron-right ms-1"></i></button>`;
+
+    container.innerHTML = html;
+}
+
+window.changePage = function (page) {
+    currentPage = page;
+    updateProductList();
+    document.getElementById('current-category-name').scrollIntoView({ behavior: 'smooth', block: 'start' });
+};
 
 function orderOnWhatsApp(id, name) {
     const message = encodeURIComponent(`Hi Salvin Industries, I am interested in ordering: \n\nProduct: ${name}\nID: ${id}\n\nPlease provide more details.`);
@@ -180,11 +211,13 @@ async function updateProductList() {
 // Function switches
 window.switchCategory = function (catId) {
     currentCategoryId = catId;
+    currentPage = 1;
     updateProductList();
 };
 
 window.switchBrand = function (brandId) {
     currentBrandId = brandId;
+    currentPage = 1;
     updateProductList();
 };
 

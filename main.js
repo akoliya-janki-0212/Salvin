@@ -9,9 +9,23 @@ document.addEventListener('DOMContentLoaded', async () => {
     // This allows "one place changes" for Header, Footer, and Popup
     function loadComponents() {
         try {
-            const headerHTML = window.SALVIN_COMPONENTS.header;
-            const footerHTML = window.SALVIN_COMPONENTS.footer;
-            const popupHTML = window.SALVIN_COMPONENTS.popup;
+            // Automatically detect subdirectory depth
+            let prefix = '';
+            if (window.location.pathname.includes('/products/')) {
+                prefix = '../../';
+            }
+
+            // Helper to prefix relative paths only (skip absolute links like http/#)
+            const fixPath = (html) => {
+                if (!prefix) return html;
+                return html.replace(/href="((?!http|#|mailto|tel:)[^"]+)"/g, `href="${prefix}$1"`)
+                           .replace(/src="((?!http|#|mailto|tel:)[^"]+)"/g, `src="${prefix}$1"`);
+            };
+
+            const headerHTML = fixPath(window.SALVIN_COMPONENTS.header);
+            const footerHTML = fixPath(window.SALVIN_COMPONENTS.footer);
+            const popupHTML = fixPath(window.SALVIN_COMPONENTS.popup);
+            const chatHTML = fixPath(window.SALVIN_COMPONENTS.chatWidget);
 
             const headerRoot = document.getElementById('header-root');
             const footerRoot = document.getElementById('footer-root');
@@ -28,7 +42,7 @@ document.addEventListener('DOMContentLoaded', async () => {
             if (headerRoot) headerRoot.innerHTML = headerHTML;
             if (footerRoot) footerRoot.innerHTML = footerHTML;
             if (popupRoot) popupRoot.innerHTML = popupHTML;
-            if (chatRoot) chatRoot.innerHTML = window.SALVIN_COMPONENTS.chatWidget;
+            if (chatRoot) chatRoot.innerHTML = chatHTML;
 
             // Re-initialize logic that depends on these components
             initializeComponentLogic();
