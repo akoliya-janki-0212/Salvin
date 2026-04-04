@@ -20,12 +20,15 @@ const ITEMS_PER_PAGE = 50;
 
 // Helper to get image URL from Airtable (String or Attachment Array)
 function getProductImage(record) {
+    const name = record.product_name || record.Name || record.name || record.Title || 'Unnamed Product';
+    const id = record.product_id || record.id || record.ID || record['Product ID'] || 'N/A';
+    const slug = slugify(name);
+
     const fieldData = record.image || record.Image || record.ImageURL || record.imageurl;
-    if (!fieldData) return 'assets/placeholder-spare.jpg';
-    if (Array.isArray(fieldData) && fieldData.length > 0) {
-        return fieldData[0].url; // Airtable Attachment format
+    if (fieldData && ((Array.isArray(fieldData) && fieldData.length > 0) || (typeof fieldData === 'string' && fieldData.length > 5))) {
+        return `assets/spares/${slug}_${id}_0.png`;
     }
-    return fieldData; // String URL format
+    return 'assets/placeholder-spare.jpg';
 }
 
 function slugify(text) {

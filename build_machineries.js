@@ -198,7 +198,7 @@ function injectPreloadedHTML(htmlPath, items, type) {
 
             if (rawImages && rawImages.length > 0) {
                 // Point to the first local image downloaded by buildMachineries/buildSpares
-                imgUrl = `assets/${assetSubfolder}/${slug}_0.png`;
+                imgUrl = `assets/${assetSubfolder}/${slug}_${displayId}_0.png`;
             }
 
             gridHtml += `
@@ -331,7 +331,7 @@ async function buildMachineries() {
         const localImages = [];
         const rawImages = machine.image || machine.Image || machine.ImageURL || [];
         for (let i = 0; i < rawImages.length; i++) {
-            const localName = `${slug}_${i}.png`;
+            const localName = `${slug}_${pid}_${i}.png`;
             const localPath = `assets/machines/${localName}`;
             await downloadImage(rawImages[i].url, path.join(CONFIG.outputDir, localPath));
             localImages.push(`../../${localPath}`);
@@ -455,7 +455,7 @@ async function buildSpares() {
         const localImages = [];
         const rawImages = spare.image || spare.Image || spare.ImageURL || [];
         for (let i = 0; i < rawImages.length; i++) {
-            const localName = `${slug}_${i}.png`;
+            const localName = `${slug}_${pid}_${i}.png`;
             const localPath = `assets/spares/${localName}`;
             await downloadImage(rawImages[i].url, path.join(CONFIG.outputDir, localPath));
             localImages.push(`../../${localPath}`);

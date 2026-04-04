@@ -26,12 +26,15 @@ const MAIN_CAT_MAP = {
  * Helper to get image URL from Airtable (String or Attachment Array)
  */
 function getProductImage(record) {
+    const name = record.product_name || record.Name || record.name || record.Title || 'Unnamed Machine';
+    const displayId = record.product_id || record.id;
+    const slug = slugify(name);
+
     const fieldData = record.image || record.Image || record.ImageURL || record.imageurl;
-    if (!fieldData) return 'assets/placeholder-machine.jpg';
-    if (Array.isArray(fieldData) && fieldData.length > 0) {
-        return fieldData[0].url;
+    if (fieldData && ((Array.isArray(fieldData) && fieldData.length > 0) || (typeof fieldData === 'string' && fieldData.length > 5))) {
+        return `assets/machines/${slug}_${displayId}_0.png`;
     }
-    return fieldData;
+    return 'assets/placeholder-machine.jpg';
 }
 
 /**
