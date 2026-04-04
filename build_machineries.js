@@ -187,14 +187,19 @@ function injectPreloadedHTML(htmlPath, items, type) {
         let gridHtml = '';
         const firstPage = items.slice(0, 50);
         firstPage.forEach(item => {
-            let imgUrl = type === 'machineries' ? 'assets/placeholder-machine.jpg' : 'assets/placeholder-spare.jpg';
-            const rawImages = item.image || item.Image || item.ImageURL || [];
-            if (rawImages && rawImages.length > 0) imgUrl = rawImages[0].url;
-
             const name = item.product_name || item.Name || item.name || item.Title || 'Unnamed Product';
             const displayId = item.product_id || item.id || item.ID || 'N/A';
             const slug = slugify(name);
             const folder = type === 'machineries' ? 'machine' : 'spare';
+            const assetSubfolder = type === 'machineries' ? 'machines' : 'spares';
+
+            let imgUrl = type === 'machineries' ? 'assets/placeholder-machine.jpg' : 'assets/placeholder-spare.jpg';
+            const rawImages = item.image || item.Image || item.ImageURL || [];
+
+            if (rawImages && rawImages.length > 0) {
+                // Point to the first local image downloaded by buildMachineries/buildSpares
+                imgUrl = `assets/${assetSubfolder}/${slug}_0.png`;
+            }
 
             gridHtml += `
             <div class="product-card">
